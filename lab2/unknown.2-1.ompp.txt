@@ -1,0 +1,72 @@
+----------------------------------------------------------------------
+----     ompP General Information     --------------------------------
+----------------------------------------------------------------------
+Start Date      : Wed Feb 07 14:57:51 2018
+End Date        : Wed Feb 07 14:57:55 2018
+Duration        : 4.13 sec
+Application Name: unknown
+Type of Report  : final
+User Time       : 8.11 sec
+System Time     : 0.01 sec
+Max Threads     : 2
+ompP Version    : 0.8.99
+ompP Build Date : Feb  7 2018 14:08:19
+PAPI Support    : not available
+
+----------------------------------------------------------------------
+----     ompP Region Overview     ------------------------------------
+----------------------------------------------------------------------
+PARALLEL LOOP: 1 region:
+ * R00001 matrix2.c (77-87)
+
+----------------------------------------------------------------------
+----     ompP Callgraph     ------------------------------------------
+----------------------------------------------------------------------
+
+  Inclusive  (%)   Exclusive  (%)
+   4.13 (100.0%)    0.00 ( 0.04%)           [unknown: 2 threads]
+   4.13 (100.0%)    4.13 (100.0%)  PARLOOP  +-R00001 matrix2.c (77-87)
+
+----------------------------------------------------------------------
+----     ompP Flat Region Profile (inclusive data)     ---------------
+----------------------------------------------------------------------
+R00001 matrix2.c (77-87) PARALLEL LOOP
+ TID      execT      execC      bodyT   exitBarT   startupT   shutdwnT      taskT
+   0       4.13          1       4.06       0.07       0.00       0.00       0.00
+   1       4.13          1       4.13       0.00       0.00       0.00       0.00
+ SUM       8.25          2       8.18       0.07       0.00       0.00       0.00
+
+----------------------------------------------------------------------
+----     ompP Callgraph Region Profiles (incl./excl. data)     -------
+----------------------------------------------------------------------
+
+[*00] unknown
+[=01] R00001 matrix2.c (77-87) PARALLEL LOOP
+ TID      execT      execC    bodyT/I    bodyT/E   exitBarT   startupT   shutdwnT      taskT
+   0       4.13          1       4.06       4.06       0.07       0.00       0.00       0.00
+   1       4.13          1       4.13       4.13       0.00       0.00       0.00       0.00
+ SUM       8.25          2       8.18       8.18       0.07       0.00       0.00       0.00
+
+
+----------------------------------------------------------------------
+----     ompP Overhead Analysis Report     ---------------------------
+----------------------------------------------------------------------
+Total runtime (wallclock)   : 4.13 sec [2 threads]
+Number of parallel regions  : 1
+Parallel coverage           : 4.13 sec (99.96%)
+
+Parallel regions sorted by wallclock time:
+            Type                            Location      Wallclock (%) 
+R00001   PARLOOP                   matrix2.c (77-87)       4.13 (99.96) 
+                                                 SUM       4.13 (99.96) 
+
+Overheads wrt. each individual parallel region:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     8.25     0.07 ( 0.83)    0.00 ( 0.00)    0.07 ( 0.83)    0.00 ( 0.00)    0.00 ( 0.01)
+
+Overheads wrt. whole program:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     8.25     0.07 ( 0.83)    0.00 ( 0.00)    0.07 ( 0.83)    0.00 ( 0.00)    0.00 ( 0.01)
+   SUM     8.25     0.07 ( 0.83)    0.00 ( 0.00)    0.07 ( 0.83)    0.00 ( 0.00)    0.00 ( 0.01)
+
+

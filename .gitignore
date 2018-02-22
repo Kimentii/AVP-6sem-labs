@@ -1,0 +1,12 @@
+_builds
+CMakeFiles
+*.swp
+*.s
+*.o
+a.out
+*.swp
+*.swo]
+*/lab3
+*/lab2
+*/lab1
+!gnuplot_i.o

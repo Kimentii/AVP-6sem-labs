@@ -1,0 +1,1365 @@
+main.c:16:5: note: ===vect_slp_analyze_bb===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: === vect_analyze_data_refs ===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: not vectorized: not enough data-refs in basic block.
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: === vect_analyze_data_refs ===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: not vectorized: not enough data-refs in basic block.
+main.c:45:2: note: === vect_analyze_data_refs ===
+main.c:45:2: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at matrix.c:41
+matrix.c:41:4: note: ===== analyze_loop_nest =====
+matrix.c:41:4: note: === vect_analyze_loop_form ===
+matrix.c:41:4: note: === get_loop_niters ===
+matrix.c:41:4: note: not vectorized: loop contains function calls or data references that cannot be analyzed
+matrix.c:10:9: note: vectorized 0 loops in function.
+matrix.c:10:9: note: ===vect_slp_analyze_bb===
+matrix.c:13:5: note: === vect_analyze_data_refs ===
+matrix.c:13:5: note: not vectorized: not enough data-refs in basic block.
+matrix.c:13:5: note: ===vect_slp_analyze_bb===
+matrix.c:15:3: note: ===vect_slp_analyze_bb===
+matrix.c:17:5: note: === vect_analyze_data_refs ===
+matrix.c:17:5: note: got vectype for stmt: random_seed.0_1 = random_seed;
+vector(2) long int
+matrix.c:17:5: note: not vectorized: not enough data-refs in basic block.
+matrix.c:17:5: note: ===vect_slp_analyze_bb===
+matrix.c:19:6: note: === vect_analyze_data_refs ===
+matrix.c:19:6: note: not vectorized: not enough data-refs in basic block.
+matrix.c:19:6: note: ===vect_slp_analyze_bb===
+matrix.c:21:4: note: ===vect_slp_analyze_bb===
+matrix.c:24:6: note: === vect_analyze_data_refs ===
+matrix.c:24:6: note: not vectorized: not enough data-refs in basic block.
+matrix.c:24:6: note: ===vect_slp_analyze_bb===
+matrix.c:26:4: note: ===vect_slp_analyze_bb===
+matrix.c:30:3: note: === vect_analyze_data_refs ===
+matrix.c:30:3: note: got vectype for stmt: random_seed.1_2 = random_seed;
+vector(2) long int
+matrix.c:30:3: note: not vectorized: not enough data-refs in basic block.
+matrix.c:30:3: note: ===vect_slp_analyze_bb===
+matrix.c:36:6: note: === vect_analyze_data_refs ===
+matrix.c:36:6: note: got vectype for stmt: *matrix_28 = _6;
+vector(2) long unsigned int
+matrix.c:36:6: note: not vectorized: not enough data-refs in basic block.
+matrix.c:36:6: note: ===vect_slp_analyze_bb===
+matrix.c:36:6: note: ===vect_slp_analyze_bb===
+matrix.c:36:6: note: ===vect_slp_analyze_bb===
+matrix.c:42:32: note: === vect_analyze_data_refs ===
+matrix.c:42:32: note: not vectorized: not enough data-refs in basic block.
+matrix.c:41:4: note: === vect_analyze_data_refs ===
+matrix.c:41:4: note: got vectype for stmt: _13 = *matrix_28;
+vector(2) long unsigned int
+matrix.c:41:4: note: got vectype for stmt: *_16 = _17;
+vector(2) double
+matrix.c:41:4: note: === vect_analyze_data_ref_accesses ===
+matrix.c:41:4: note: not consecutive access *_16 = _17;
+matrix.c:41:4: note: not consecutive access _13 = *matrix_28;
+matrix.c:41:4: note: not vectorized: no grouped stores in basic block.
+matrix.c:41:4: note: ===vect_slp_analyze_bb===
+matrix.c:41:4: note: ===vect_slp_analyze_bb===
+matrix.c:46:9: note: === vect_analyze_data_refs ===
+matrix.c:46:9: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at matrix.c:59
+matrix.c:59:3: note: ===== analyze_loop_nest =====
+matrix.c:59:3: note: === vect_analyze_loop_form ===
+matrix.c:59:3: note: === get_loop_niters ===
+matrix.c:59:3: note: === vect_analyze_data_refs ===
+matrix.c:59:3: note: got vectype for stmt: *_7 = _8;
+vector(2) double
+matrix.c:59:3: note: === vect_analyze_scalar_cycles ===
+matrix.c:59:3: note: Analyze phi: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: Access function of PHI: {0, +, 1}_2
+matrix.c:59:3: note: step: 1,  init: 0
+matrix.c:59:3: note: Detected induction.
+matrix.c:59:3: note: Analyze phi: .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: Analyze phi: ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: Access function of PHI: {256, +, 4294967295}_2
+matrix.c:59:3: note: step: 4294967295,  init: 256
+matrix.c:59:3: note: Detected induction.
+matrix.c:59:3: note: === vect_pattern_recog ===
+matrix.c:59:3: note: vect_is_simple_use: operand _5
+matrix.c:59:3: note: def_stmt: _5 = (long unsigned int) j_26;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: vect_is_simple_use: operand j_26
+matrix.c:59:3: note: def_stmt: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: type of def: induction
+matrix.c:59:3: note: vect_is_simple_use: operand 8
+matrix.c:59:3: note: === vect_analyze_data_ref_accesses ===
+matrix.c:59:3: note: === vect_mark_stmts_to_be_vectorized ===
+matrix.c:59:3: note: init: phi relevant? j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: init: phi relevant? .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: init: phi relevant? ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: init: stmt relevant? _4 = j_26 + 1;
+matrix.c:59:3: note: init: stmt relevant? _5 = (long unsigned int) j_26;
+matrix.c:59:3: note: init: stmt relevant? _6 = _5 * 8;
+matrix.c:59:3: note: init: stmt relevant? _7 = _2 + _6;
+matrix.c:59:3: note: init: stmt relevant? _8 = (double) _4;
+matrix.c:59:3: note: init: stmt relevant? *_7 = _8;
+matrix.c:59:3: note: vec_stmt_relevant_p: stmt has vdefs.
+matrix.c:59:3: note: mark relevant 5, live 0: *_7 = _8;
+matrix.c:59:3: note: init: stmt relevant? ivtmp_24 = ivtmp_25 - 1;
+matrix.c:59:3: note: init: stmt relevant? if (ivtmp_24 != 0)
+matrix.c:59:3: note: worklist: examine stmt: *_7 = _8;
+matrix.c:59:3: note: vect_is_simple_use: operand _8
+matrix.c:59:3: note: def_stmt: _8 = (double) _4;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: mark relevant 5, live 0: _8 = (double) _4;
+matrix.c:59:3: note: worklist: examine stmt: _8 = (double) _4;
+matrix.c:59:3: note: vect_is_simple_use: operand _4
+matrix.c:59:3: note: def_stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: mark relevant 5, live 0: _4 = j_26 + 1;
+matrix.c:59:3: note: worklist: examine stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: vect_is_simple_use: operand j_26
+matrix.c:59:3: note: def_stmt: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: type of def: induction
+matrix.c:59:3: note: mark relevant 5, live 0: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: worklist: examine stmt: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: vect_is_simple_use: operand _4
+matrix.c:59:3: note: def_stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: mark relevant 5, live 0: _4 = j_26 + 1;
+matrix.c:59:3: note: already marked relevant/live.
+matrix.c:59:3: note: vect_is_simple_use: operand 0
+matrix.c:59:3: note: === vect_analyze_data_ref_dependences ===
+matrix.c:59:3: note: === vect_determine_vectorization_factor ===
+matrix.c:59:3: note: ==> examining phi: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: get vectype for scalar type:  int
+matrix.c:59:3: note: vectype: vector(4) int
+matrix.c:59:3: note: nunits = 4
+matrix.c:59:3: note: ==> examining phi: .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: ==> examining phi: ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: ==> examining statement: _4 = j_26 + 1;
+matrix.c:59:3: note: get vectype for scalar type:  int
+matrix.c:59:3: note: vectype: vector(4) int
+matrix.c:59:3: note: get vectype for scalar type:  int
+matrix.c:59:3: note: vectype: vector(4) int
+matrix.c:59:3: note: nunits = 4
+matrix.c:59:3: note: ==> examining statement: _5 = (long unsigned int) j_26;
+matrix.c:59:3: note: skip.
+matrix.c:59:3: note: ==> examining statement: _6 = _5 * 8;
+matrix.c:59:3: note: skip.
+matrix.c:59:3: note: ==> examining statement: _7 = _2 + _6;
+matrix.c:59:3: note: skip.
+matrix.c:59:3: note: ==> examining statement: _8 = (double) _4;
+matrix.c:59:3: note: get vectype for scalar type:  double
+matrix.c:59:3: note: vectype: vector(2) double
+matrix.c:59:3: note: get vectype for scalar type:  int
+matrix.c:59:3: note: vectype: vector(4) int
+matrix.c:59:3: note: nunits = 4
+matrix.c:59:3: note: ==> examining statement: *_7 = _8;
+matrix.c:59:3: note: get vectype for scalar type:  mtype
+matrix.c:59:3: note: vectype: vector(2) double
+matrix.c:59:3: note: nunits = 2
+matrix.c:59:3: note: ==> examining statement: ivtmp_24 = ivtmp_25 - 1;
+matrix.c:59:3: note: skip.
+matrix.c:59:3: note: ==> examining statement: if (ivtmp_24 != 0)
+matrix.c:59:3: note: skip.
+matrix.c:59:3: note: vectorization factor = 4
+matrix.c:59:3: note: === vect_analyze_slp ===
+matrix.c:59:3: note: === vect_make_slp_decision ===
+matrix.c:59:3: note: vectorization_factor = 4, niters = 256
+matrix.c:59:3: note: === vect_analyze_data_refs_alignment ===
+matrix.c:59:3: note: vect_compute_data_ref_alignment:
+matrix.c:59:3: note: can't force alignment of ref: *_7
+matrix.c:59:3: note: === vect_prune_runtime_alias_test_list ===
+matrix.c:59:3: note: === vect_enhance_data_refs_alignment ===
+matrix.c:59:3: note: Unknown misalignment, naturally aligned
+matrix.c:59:3: note: vect_can_advance_ivs_p:
+matrix.c:59:3: note: Analyze phi: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: Analyze phi: .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: reduc or virtual phi. skip.
+matrix.c:59:3: note: Analyze phi: ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: Alignment of access forced using peeling.
+matrix.c:59:3: note: Peeling for alignment will be applied.
+matrix.c:59:3: note: === vect_analyze_loop_operations ===
+matrix.c:59:3: note: examining phi: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: === vectorizable_induction ===
+matrix.c:59:3: note: vect_model_induction_cost: inside_cost = 1, prologue_cost = 2 .
+matrix.c:59:3: note: examining phi: .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: examining phi: ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: ==> examining statement: _4 = j_26 + 1;
+matrix.c:59:3: note: vect_is_simple_use: operand j_26
+matrix.c:59:3: note: def_stmt: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: type of def: induction
+matrix.c:59:3: note: vect_is_simple_use: operand 1
+matrix.c:59:3: note: === vectorizable_operation ===
+matrix.c:59:3: note: vect_model_simple_cost: inside_cost = 1, prologue_cost = 1 .
+matrix.c:59:3: note: ==> examining statement: _5 = (long unsigned int) j_26;
+matrix.c:59:3: note: irrelevant.
+matrix.c:59:3: note: ==> examining statement: _6 = _5 * 8;
+matrix.c:59:3: note: irrelevant.
+matrix.c:59:3: note: ==> examining statement: _7 = _2 + _6;
+matrix.c:59:3: note: irrelevant.
+matrix.c:59:3: note: ==> examining statement: _8 = (double) _4;
+matrix.c:59:3: note: vect_is_simple_use: operand _4
+matrix.c:59:3: note: def_stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: === vectorizable_conversion ===
+matrix.c:59:3: note: vect_model_simple_cost: inside_cost = 1, prologue_cost = 0 .
+matrix.c:59:3: note: ==> examining statement: *_7 = _8;
+matrix.c:59:3: note: vect_is_simple_use: operand _8
+matrix.c:59:3: note: def_stmt: _8 = (double) _4;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: vect_model_store_cost: aligned.
+matrix.c:59:3: note: vect_model_store_cost: inside_cost = 2, prologue_cost = 0 .
+matrix.c:59:3: note: ==> examining statement: ivtmp_24 = ivtmp_25 - 1;
+matrix.c:59:3: note: irrelevant.
+matrix.c:59:3: note: ==> examining statement: if (ivtmp_24 != 0)
+matrix.c:59:3: note: irrelevant.
+cost model: prologue peel iters set to vf/2.
+cost model: epilogue peel iters set to vf/2 because peeling for alignment is unknown.
+matrix.c:59:3: note: Cost model analysis: 
+  Vector inside of loop cost: 5
+  Vector prologue cost: 13
+  Vector epilogue cost: 10
+  Scalar iteration cost: 3
+  Scalar outside cost: 0
+  Vector outside cost: 23
+  prologue iterations: 2
+  epilogue iterations: 2
+  Calculated minimum iters for profitability: 11
+matrix.c:59:3: note:   Runtime profitability threshold = 10
+matrix.c:59:3: note:   Static estimate profitability threshold = 10
+matrix.c:59:3: note: epilog loop required
+matrix.c:59:3: note: vect_can_advance_ivs_p:
+matrix.c:59:3: note: Analyze phi: j_26 = PHI <_4(4), 0(7)>
+matrix.c:59:3: note: Analyze phi: .MEM_27 = PHI <.MEM_18(4), .MEM_17(7)>
+matrix.c:59:3: note: reduc or virtual phi. skip.
+matrix.c:59:3: note: Analyze phi: ivtmp_25 = PHI <ivtmp_24(4), 256(7)>
+matrix.c:59:3: note: loop vectorized
+matrix.c:59:3: note: === vec_transform_loop ===
+matrix.c:59:3: note: created _2
+matrix.c:59:3: note: niters for prolog loop: (unsigned int) -((unsigned long) _2 >> 3) & 1
+
+loop at matrix.c:60: if (ivtmp_39 < prolog_loop_niters.22_33)
+matrix.c:59:3: note: === vect_update_inits_of_dr ===
+matrix.c:59:3: note: vect_update_ivs_after_vectorizer: phi: j_26 = PHI <_4(4), j_40(12)>
+matrix.c:59:3: note: vect_update_ivs_after_vectorizer: phi: .MEM_27 = PHI <.MEM_18(4), .MEM_41(12)>
+matrix.c:59:3: note: reduc or virtual phi. skip.
+matrix.c:59:3: note: vect_update_ivs_after_vectorizer: phi: ivtmp_25 = PHI <ivtmp_24(4), ivtmp_42(12)>
+matrix.c:59:3: note: ------>vectorizing phi: j_26 = PHI <_4(4), j_40(20)>
+matrix.c:59:3: note: transform phi.
+matrix.c:59:3: note: transform induction phi.
+matrix.c:59:3: note: created new init_stmt: vect_cst__65 = {j_40, _62, _63, _64};
+matrix.c:59:3: note: created new init_stmt: vect_cst__66 = { 4, 4, 4, 4 };
+matrix.c:59:3: note: transform induction: created def-use cycle: vect_vec_iv_.29_67 = PHI <vect_vec_iv_.29_68(4), vect_cst__65(20)>
+vect_vec_iv_.29_68 = vect_vec_iv_.29_67 + vect_cst__66;
+matrix.c:59:3: note: ------>vectorizing phi: .MEM_27 = PHI <.MEM_18(4), .MEM_41(20)>
+matrix.c:59:3: note: ------>vectorizing phi: ivtmp_25 = PHI <ivtmp_24(4), ivtmp_42(20)>
+matrix.c:59:3: note: ------>vectorizing phi: vect_vec_iv_.29_67 = PHI <vect_vec_iv_.29_68(4), vect_cst__65(20)>
+matrix.c:59:3: note: ------>vectorizing statement: vect_vec_iv_.29_68 = vect_vec_iv_.29_67 + vect_cst__66;
+matrix.c:59:3: note: ------>vectorizing statement: _4 = j_26 + 1;
+matrix.c:59:3: note: transform statement.
+matrix.c:59:3: note: vect_is_simple_use: operand j_26
+matrix.c:59:3: note: def_stmt: j_26 = PHI <_4(4), j_40(20)>
+matrix.c:59:3: note: type of def: induction
+matrix.c:59:3: note: vect_is_simple_use: operand 1
+matrix.c:59:3: note: transform binary/unary operation.
+matrix.c:59:3: note: vect_get_vec_def_for_operand: j_26
+matrix.c:59:3: note: vect_is_simple_use: operand j_26
+matrix.c:59:3: note: def_stmt: j_26 = PHI <_4(4), j_40(20)>
+matrix.c:59:3: note: type of def: induction
+matrix.c:59:3: note:   def_stmt =  j_26 = PHI <_4(4), j_40(20)>
+matrix.c:59:3: note: vect_get_vec_def_for_operand: 1
+matrix.c:59:3: note: vect_is_simple_use: operand 1
+matrix.c:59:3: note: created new init_stmt: vect_cst__69 = { 1, 1, 1, 1 };
+matrix.c:59:3: note: add new stmt: vect__4.30_70 = vect_vec_iv_.29_67 + vect_cst__69;
+matrix.c:59:3: note: ------>vectorizing statement: _5 = (long unsigned int) j_26;
+matrix.c:59:3: note: ------>vectorizing statement: _6 = _5 * 8;
+matrix.c:59:3: note: ------>vectorizing statement: _7 = _2 + _6;
+matrix.c:59:3: note: ------>vectorizing statement: _8 = (double) _4;
+matrix.c:59:3: note: multiple-types.
+matrix.c:59:3: note: transform statement.
+matrix.c:59:3: note: vect_is_simple_use: operand _4
+matrix.c:59:3: note: def_stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: transform conversion. ncopies = 1.
+matrix.c:59:3: note: vect_get_vec_def_for_operand: _4
+matrix.c:59:3: note: vect_is_simple_use: operand _4
+matrix.c:59:3: note: def_stmt: _4 = j_26 + 1;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note:   def_stmt =  _4 = j_26 + 1;
+matrix.c:59:3: note: add new stmt: vect__8.31_71 = [vec_unpack_float_lo_expr] vect__4.30_70;
+matrix.c:59:3: note: add new stmt: vect__8.31_72 = [vec_unpack_float_hi_expr] vect__4.30_70;
+matrix.c:59:3: note: ------>vectorizing statement: *_7 = _8;
+matrix.c:59:3: note: multiple-types.
+matrix.c:59:3: note: transform statement.
+matrix.c:59:3: note: vect_is_simple_use: operand _8
+matrix.c:59:3: note: def_stmt: _8 = (double) _4;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: transform store. ncopies = 2
+matrix.c:59:3: note: vect_get_vec_def_for_operand: _8
+matrix.c:59:3: note: vect_is_simple_use: operand _8
+matrix.c:59:3: note: def_stmt: _8 = (double) _4;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note:   def_stmt =  _8 = (double) _4;
+matrix.c:59:3: note: create vector_type-pointer variable to type: vector(2) double  vectorizing a pointer ref: MEM[(mtype *)_2]
+matrix.c:59:3: note: created vectp.33_73
+matrix.c:59:3: note: add new stmt: MEM[(mtype *)vectp.32_75] = vect__8.31_71;
+matrix.c:59:3: note: vect_is_simple_use: operand vect__8.31_71
+matrix.c:59:3: note: def_stmt: vect__8.31_71 = [vec_unpack_float_lo_expr] vect__4.30_70;
+matrix.c:59:3: note: type of def: internal
+matrix.c:59:3: note: add new stmt: vectp.32_78 = vectp.32_75 + 16;
+matrix.c:59:3: note: add new stmt: MEM[(mtype *)vectp.32_78] = vect__8.31_72;
+matrix.c:59:3: note: ------>vectorizing statement: ivtmp_24 = ivtmp_25 - 1;
+matrix.c:59:3: note: ------>vectorizing statement: vectp.32_76 = vectp.32_78 + 16;
+matrix.c:59:3: note: ------>vectorizing statement: if (ivtmp_24 != 0)
+
+loop at matrix.c:60: if (ivtmp_81 < bnd.25_56)
+matrix.c:59:3: note: LOOP VECTORIZED
+
+matrix.c:49:9: note: vectorized 1 loops in function.
+matrix.c:49:9: note: ===vect_slp_analyze_bb===
+matrix.c:52:5: note: === vect_analyze_data_refs ===
+matrix.c:52:5: note: not vectorized: not enough data-refs in basic block.
+matrix.c:52:5: note: ===vect_slp_analyze_bb===
+matrix.c:54:3: note: ===vect_slp_analyze_bb===
+matrix.c:54:3: note: ===vect_slp_analyze_bb===
+matrix.c:54:3: note: === vect_analyze_data_refs ===
+matrix.c:54:3: note: not vectorized: not enough data-refs in basic block.
+matrix.c:54:3: note: ===vect_slp_analyze_bb===
+matrix.c:59:3: note: === vect_analyze_data_refs ===
+matrix.c:59:3: note: got vectype for stmt: *_6 = _7;
+vector(2) double
+matrix.c:59:3: note: not vectorized: not enough data-refs in basic block.
+matrix.c:59:3: note: ===vect_slp_analyze_bb===
+matrix.c:59:3: note: === vect_analyze_data_refs ===
+matrix.c:59:3: note: got vectype for stmt: *_86 = _87;
+vector(2) double
+matrix.c:59:3: note: not vectorized: not enough data-refs in basic block.
+matrix.c:59:3: note: ===vect_slp_analyze_bb===
+matrix.c:60:17: note: === vect_analyze_data_refs ===
+matrix.c:60:17: note: got vectype for stmt: *_51 = _52;
+vector(2) double
+matrix.c:60:17: note: not vectorized: not enough data-refs in basic block.
+matrix.c:60:17: note: ===vect_slp_analyze_bb===
+matrix.c:60:17: note: === vect_analyze_data_refs ===
+matrix.c:60:17: note: not vectorized: no vectype for stmt: MEM[(mtype *)vectp.32_75] = vect__8.31_71;
+ scalar_type: vector(2) double
+matrix.c:60:17: note: not vectorized: no vectype for stmt: MEM[(mtype *)vectp.32_78] = vect__8.31_72;
+ scalar_type: vector(2) double
+matrix.c:60:17: note: === vect_analyze_data_ref_accesses ===
+matrix.c:60:17: note: not vectorized: no grouped stores in basic block.
+matrix.c:60:17: note: ===vect_slp_analyze_bb===
+matrix.c:63:9: note: === vect_analyze_data_refs ===
+matrix.c:63:9: note: not vectorized: not enough data-refs in basic block.
+matrix.c:63:9: note: ===vect_slp_analyze_bb===
+matrix.c:58:13: note: === vect_analyze_data_refs ===
+matrix.c:58:13: note: got vectype for stmt: *matrix_15 = _2;
+vector(2) long unsigned int
+matrix.c:58:13: note: not vectorized: not enough data-refs in basic block.
+matrix.c:58:13: note: ===vect_slp_analyze_bb===
+matrix.c:60:17: note: === vect_analyze_data_refs ===
+matrix.c:60:17: note: got vectype for stmt: *_11 = _3;
+vector(2) double
+matrix.c:60:17: note: not vectorized: not enough data-refs in basic block.
+matrix.c:60:17: note: ===vect_slp_analyze_bb===
+matrix.c:60:17: note: === vect_analyze_data_refs ===
+matrix.c:60:17: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at matrix.c:70
+matrix.c:70:4: note: ===== analyze_loop_nest =====
+matrix.c:70:4: note: === vect_analyze_loop_form ===
+matrix.c:70:4: note: === vect_analyze_loop_form ===
+matrix.c:70:4: note: === get_loop_niters ===
+matrix.c:70:4: note: Considering outer-loop vectorization.
+matrix.c:70:4: note: === get_loop_niters ===
+matrix.c:70:4: note: not vectorized: loop contains function calls or data references that cannot be analyzed
+
+Analyzing loop at matrix.c:71
+matrix.c:71:5: note: ===== analyze_loop_nest =====
+matrix.c:71:5: note: === vect_analyze_loop_form ===
+matrix.c:71:5: note: === get_loop_niters ===
+matrix.c:71:5: note: not vectorized: loop contains function calls or data references that cannot be analyzed
+matrix.c:65:6: note: vectorized 0 loops in function.
+matrix.c:65:6: note: ===vect_slp_analyze_bb===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: ===vect_slp_analyze_bb===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: ===vect_slp_analyze_bb===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: === vect_analyze_data_refs ===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: got vectype for stmt: _2 = *matrix_19(D);
+vector(2) long unsigned int
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: got vectype for stmt: _8 = *_7;
+vector(2) double
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: === vect_analyze_data_ref_accesses ===
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: not consecutive access _8 = *_7;
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: not consecutive access _2 = *matrix_19(D);
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:10: note: not vectorized: no grouped stores in basic block.
+matrix.c:71:5: note: === vect_analyze_data_refs ===
+matrix.c:71:5: note: not vectorized: not enough data-refs in basic block.
+matrix.c:71:5: note: ===vect_slp_analyze_bb===
+matrix.c:70:4: note: === vect_analyze_data_refs ===
+matrix.c:70:4: note: not vectorized: not enough data-refs in basic block.
+matrix.c:70:4: note: ===vect_slp_analyze_bb===
+matrix.c:70:4: note: ===vect_slp_analyze_bb===
+matrix.c:72:49: note: === vect_analyze_data_refs ===
+matrix.c:72:49: note: not vectorized: not enough data-refs in basic block.
+matrix.c:72:49: note: ===vect_slp_analyze_bb===
+matrix.c:80:1: note: === vect_analyze_data_refs ===
+matrix.c:80:1: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at matrix.c:90
+matrix.c:90:3: note: ===== analyze_loop_nest =====
+matrix.c:90:3: note: === vect_analyze_loop_form ===
+matrix.c:90:3: note: === vect_analyze_loop_form ===
+matrix.c:90:3: note: === get_loop_niters ===
+matrix.c:90:3: note: Considering outer-loop vectorization.
+matrix.c:90:3: note: === get_loop_niters ===
+matrix.c:90:3: note: === vect_analyze_data_refs ===
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + (long unsigned int) (i_163 * 16) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _47 = *_46;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *b_37
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _53 = *_52;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _58 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + (long unsigned int) (i_163 * 16) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_46 = _60;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 1) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 8
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _70 = *_69;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 8)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 8
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _76 = *_75;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _81 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 1) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 8
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_69 = _83;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 2) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 16
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _93 = *_92;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 16)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 16
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _99 = *_98;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _104 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 2) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 16
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_92 = _106;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 3) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 24
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _116 = *_115;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 24)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 24
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _122 = *_121;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _127 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 3) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 24
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_115 = _129;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 4) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 32
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _139 = *_138;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 32)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 32
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _145 = *_144;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _150 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 4) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 32
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_138 = _152;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 5) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 40
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _162 = *_161;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 40)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 40
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _168 = *_167;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _173 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 5) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 40
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_161 = _175;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 6) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 48
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _185 = *_184;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 48)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 48
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _191 = *_190;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _196 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 6) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 48
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_184 = _198;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 7) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 56
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _208 = *_207;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 56)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 56
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _214 = *_213;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _219 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 7) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 56
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_207 = _221;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 8) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 64
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _231 = *_230;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 64)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 64
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _237 = *_236;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _242 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 8) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 64
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_230 = _244;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 9) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 72
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _254 = *_253;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 72)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 72
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _260 = *_259;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _265 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 9) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 72
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_253 = _267;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 10) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 80
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _277 = *_276;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 80)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 80
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _283 = *_282;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _288 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 10) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 80
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_276 = _290;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 11) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 88
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _300 = *_299;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 88)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 88
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _306 = *_305;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _311 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 11) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 88
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_299 = _313;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 12) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 96
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _323 = *_322;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 96)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 96
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _329 = *_328;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _334 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 12) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 96
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_322 = _336;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 13) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 104
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _346 = *_345;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 104)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 104
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _352 = *_351;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _357 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 13) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 104
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_345 = _359;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 14) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 112
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _369 = *_368;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 112)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 112
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _375 = *_374;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _380 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 14) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 112
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_368 = _382;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 15) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 120
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _392 = *_391;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(b_37 + 120)
+matrix.c:90:3: note: 	outer base_address: b_37
+	outer offset from base address: 0
+	outer constant offset from base address: 120
+	outer step: 0
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _398 = *_397;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(a_35 + (sizetype) ((long unsigned int) (i_163 * 16) * 8))
+matrix.c:90:3: note: 	outer base_address: a_35
+	outer offset from base address: 0
+	outer constant offset from base address: 0
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: _403 = *_57;
+vector(2) double
+matrix.c:90:3: note: analyze in outer-loop: *(c_38 + ((long unsigned int) (i_163 * 16) + 15) * 8)
+matrix.c:90:3: note: 	outer base_address: c_38
+	outer offset from base address: 0
+	outer constant offset from base address: 120
+	outer step: 128
+	outer aligned to: 128
+matrix.c:90:3: note: got vectype for stmt: *_391 = _405;
+vector(2) double
+matrix.c:90:3: note: === vect_analyze_scalar_cycles ===
+matrix.c:90:3: note: Analyze phi: i_163 = PHI <i_39(6), 0(2)>
+matrix.c:90:3: note: Access function of PHI: {0, +, 1}_2
+matrix.c:90:3: note: step: 1,  init: 0
+matrix.c:90:3: note: Detected induction.
+matrix.c:90:3: note: Analyze phi: .MEM_171 = PHI <.MEM_406(6), .MEM_32(2)>
+matrix.c:90:3: note: Analyze phi: ivtmp_515 = PHI <ivtmp_514(6), 16(2)>
+matrix.c:90:3: note: Access function of PHI: {16, +, 4294967295}_2
+matrix.c:90:3: note: step: 4294967295,  init: 16
+matrix.c:90:3: note: Detected induction.
+matrix.c:90:3: note: === vect_analyze_scalar_cycles ===
+matrix.c:90:3: note: Analyze phi: j_169 = PHI <j_40(3), 0(7)>
+matrix.c:90:3: note: Access function of PHI: {0, +, 1}_3
+matrix.c:90:3: note: step: 1,  init: 0
+matrix.c:90:3: note: Detected induction.
+matrix.c:90:3: note: Analyze phi: .MEM_170 = PHI <.MEM_406(3), .MEM_171(7)>
+matrix.c:90:3: note: Analyze phi: ivtmp_517 = PHI <ivtmp_516(3), 16(7)>
+matrix.c:90:3: note: Access function of PHI: {16, +, 4294967295}_3
+matrix.c:90:3: note: step: 4294967295,  init: 16
+matrix.c:90:3: note: Detected induction.
+matrix.c:90:3: note: === vect_pattern_recog ===
+matrix.c:90:3: note: vect_is_simple_use: operand i_163
+matrix.c:90:3: note: def_stmt: i_163 = PHI <i_39(6), 0(2)>
+matrix.c:90:3: note: type of def: induction
+matrix.c:90:3: note: vect_is_simple_use: operand _44
+matrix.c:90:3: note: def_stmt: _44 = (long unsigned int) _3;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _3
+matrix.c:90:3: note: def_stmt: _3 = i_163 * 16;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _67
+matrix.c:90:3: note: def_stmt: _67 = (long unsigned int) _66;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _66
+matrix.c:90:3: note: def_stmt: _66 = _3 + 1;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _90
+matrix.c:90:3: note: def_stmt: _90 = (long unsigned int) _89;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _89
+matrix.c:90:3: note: def_stmt: _89 = _3 + 2;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _113
+matrix.c:90:3: note: def_stmt: _113 = (long unsigned int) _112;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _112
+matrix.c:90:3: note: def_stmt: _112 = _3 + 3;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _136
+matrix.c:90:3: note: def_stmt: _136 = (long unsigned int) _135;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _135
+matrix.c:90:3: note: def_stmt: _135 = _3 + 4;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _159
+matrix.c:90:3: note: def_stmt: _159 = (long unsigned int) _158;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _158
+matrix.c:90:3: note: def_stmt: _158 = _3 + 5;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _182
+matrix.c:90:3: note: def_stmt: _182 = (long unsigned int) _181;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _181
+matrix.c:90:3: note: def_stmt: _181 = _3 + 6;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _205
+matrix.c:90:3: note: def_stmt: _205 = (long unsigned int) _204;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _204
+matrix.c:90:3: note: def_stmt: _204 = _3 + 7;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _228
+matrix.c:90:3: note: def_stmt: _228 = (long unsigned int) _227;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _227
+matrix.c:90:3: note: def_stmt: _227 = _3 + 8;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _251
+matrix.c:90:3: note: def_stmt: _251 = (long unsigned int) _250;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _250
+matrix.c:90:3: note: def_stmt: _250 = _3 + 9;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _274
+matrix.c:90:3: note: def_stmt: _274 = (long unsigned int) _273;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _273
+matrix.c:90:3: note: def_stmt: _273 = _3 + 10;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _297
+matrix.c:90:3: note: def_stmt: _297 = (long unsigned int) _296;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _296
+matrix.c:90:3: note: def_stmt: _296 = _3 + 11;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _320
+matrix.c:90:3: note: def_stmt: _320 = (long unsigned int) _319;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _319
+matrix.c:90:3: note: def_stmt: _319 = _3 + 12;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _343
+matrix.c:90:3: note: def_stmt: _343 = (long unsigned int) _342;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _342
+matrix.c:90:3: note: def_stmt: _342 = _3 + 13;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _366
+matrix.c:90:3: note: def_stmt: _366 = (long unsigned int) _365;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _365
+matrix.c:90:3: note: def_stmt: _365 = _3 + 14;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _389
+matrix.c:90:3: note: def_stmt: _389 = (long unsigned int) _388;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _388
+matrix.c:90:3: note: def_stmt: _388 = _3 + 15;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand j_169
+matrix.c:90:3: note: def_stmt: j_169 = PHI <j_40(3), 0(7)>
+matrix.c:90:3: note: type of def: induction
+matrix.c:90:3: note: vect_is_simple_use: operand _50
+matrix.c:90:3: note: def_stmt: _50 = (long unsigned int) _48;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _48
+matrix.c:90:3: note: def_stmt: _48 = j_169 * 16;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _55
+matrix.c:90:3: note: def_stmt: _55 = (long unsigned int) _54;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _54
+matrix.c:90:3: note: def_stmt: _54 = _3 + j_169;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _53
+matrix.c:90:3: note: def_stmt: _53 = *_52;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _73
+matrix.c:90:3: note: def_stmt: _73 = (long unsigned int) _72;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _72
+matrix.c:90:3: note: def_stmt: _72 = _48 + 1;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _76
+matrix.c:90:3: note: def_stmt: _76 = *_75;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _96
+matrix.c:90:3: note: def_stmt: _96 = (long unsigned int) _95;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _95
+matrix.c:90:3: note: def_stmt: _95 = _48 + 2;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _99
+matrix.c:90:3: note: def_stmt: _99 = *_98;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _119
+matrix.c:90:3: note: def_stmt: _119 = (long unsigned int) _118;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _118
+matrix.c:90:3: note: def_stmt: _118 = _48 + 3;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _122
+matrix.c:90:3: note: def_stmt: _122 = *_121;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _142
+matrix.c:90:3: note: def_stmt: _142 = (long unsigned int) _141;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _141
+matrix.c:90:3: note: def_stmt: _141 = _48 + 4;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _145
+matrix.c:90:3: note: def_stmt: _145 = *_144;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _165
+matrix.c:90:3: note: def_stmt: _165 = (long unsigned int) _164;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _164
+matrix.c:90:3: note: def_stmt: _164 = _48 + 5;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _168
+matrix.c:90:3: note: def_stmt: _168 = *_167;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _188
+matrix.c:90:3: note: def_stmt: _188 = (long unsigned int) _187;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _187
+matrix.c:90:3: note: def_stmt: _187 = _48 + 6;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _191
+matrix.c:90:3: note: def_stmt: _191 = *_190;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _211
+matrix.c:90:3: note: def_stmt: _211 = (long unsigned int) _210;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _210
+matrix.c:90:3: note: def_stmt: _210 = _48 + 7;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _214
+matrix.c:90:3: note: def_stmt: _214 = *_213;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _234
+matrix.c:90:3: note: def_stmt: _234 = (long unsigned int) _233;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _233
+matrix.c:90:3: note: def_stmt: _233 = _48 + 8;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _237
+matrix.c:90:3: note: def_stmt: _237 = *_236;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _257
+matrix.c:90:3: note: def_stmt: _257 = (long unsigned int) _256;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _256
+matrix.c:90:3: note: def_stmt: _256 = _48 + 9;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _260
+matrix.c:90:3: note: def_stmt: _260 = *_259;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _280
+matrix.c:90:3: note: def_stmt: _280 = (long unsigned int) _279;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _279
+matrix.c:90:3: note: def_stmt: _279 = _48 + 10;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _283
+matrix.c:90:3: note: def_stmt: _283 = *_282;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _303
+matrix.c:90:3: note: def_stmt: _303 = (long unsigned int) _302;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _302
+matrix.c:90:3: note: def_stmt: _302 = _48 + 11;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _306
+matrix.c:90:3: note: def_stmt: _306 = *_305;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _326
+matrix.c:90:3: note: def_stmt: _326 = (long unsigned int) _325;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _325
+matrix.c:90:3: note: def_stmt: _325 = _48 + 12;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _329
+matrix.c:90:3: note: def_stmt: _329 = *_328;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _349
+matrix.c:90:3: note: def_stmt: _349 = (long unsigned int) _348;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _348
+matrix.c:90:3: note: def_stmt: _348 = _48 + 13;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _352
+matrix.c:90:3: note: def_stmt: _352 = *_351;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _372
+matrix.c:90:3: note: def_stmt: _372 = (long unsigned int) _371;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _371
+matrix.c:90:3: note: def_stmt: _371 = _48 + 14;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _375
+matrix.c:90:3: note: def_stmt: _375 = *_374;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _395
+matrix.c:90:3: note: def_stmt: _395 = (long unsigned int) _394;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand _394
+matrix.c:90:3: note: def_stmt: _394 = _48 + 15;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: vect_is_simple_use: operand 8
+matrix.c:90:3: note: vect_is_simple_use: operand _398
+matrix.c:90:3: note: def_stmt: _398 = *_397;
+matrix.c:90:3: note: type of def: internal
+matrix.c:90:3: note: === vect_analyze_data_ref_accesses ===
+matrix.c:90:3: note: Detected interleaving load *_46 and *_69
+matrix.c:90:3: note: Detected interleaving load *_46 and *_92
+matrix.c:90:3: note: Detected interleaving load *_46 and *_115
+matrix.c:90:3: note: Detected interleaving load *_46 and *_138
+matrix.c:90:3: note: Detected interleaving load *_46 and *_161
+matrix.c:90:3: note: Detected interleaving load *_46 and *_184
+matrix.c:90:3: note: Detected interleaving load *_46 and *_207
+matrix.c:90:3: note: Detected interleaving load *_46 and *_230
+matrix.c:90:3: note: Detected interleaving load *_46 and *_253
+matrix.c:90:3: note: Detected interleaving load *_46 and *_276
+matrix.c:90:3: note: Detected interleaving load *_46 and *_299
+matrix.c:90:3: note: Detected interleaving load *_46 and *_322
+matrix.c:90:3: note: Detected interleaving load *_46 and *_345
+matrix.c:90:3: note: Detected interleaving load *_46 and *_368
+matrix.c:90:3: note: Detected interleaving load *_46 and *_391
+matrix.c:90:3: note: Detected interleaving store *_46 and *_69
+matrix.c:90:3: note: Detected interleaving store *_46 and *_92
+matrix.c:90:3: note: Detected interleaving store *_46 and *_115
+matrix.c:90:3: note: Detected interleaving store *_46 and *_138
+matrix.c:90:3: note: Detected interleaving store *_46 and *_161
+matrix.c:90:3: note: Detected interleaving store *_46 and *_184
+matrix.c:90:3: note: Detected interleaving store *_46 and *_207
+matrix.c:90:3: note: Detected interleaving store *_46 and *_230
+matrix.c:90:3: note: Detected interleaving store *_46 and *_253
+matrix.c:90:3: note: Detected interleaving store *_46 and *_276
+matrix.c:90:3: note: Detected interleaving store *_46 and *_299
+matrix.c:90:3: note: Detected interleaving store *_46 and *_322
+matrix.c:90:3: note: Detected interleaving store *_46 and *_345
+matrix.c:90:3: note: Detected interleaving store *_46 and *_368
+matrix.c:90:3: note: Detected interleaving store *_46 and *_391
+matrix.c:90:3: note: Detected interleaving load *_52 and *_75
+matrix.c:90:3: note: Detected interleaving load *_52 and *_98
+matrix.c:90:3: note: Detected interleaving load *_52 and *_121
+matrix.c:90:3: note: Detected interleaving load *_52 and *_144
+matrix.c:90:3: note: Detected interleaving load *_52 and *_167
+matrix.c:90:3: note: Detected interleaving load *_52 and *_190
+matrix.c:90:3: note: Detected interleaving load *_52 and *_213
+matrix.c:90:3: note: Detected interleaving load *_52 and *_236
+matrix.c:90:3: note: Detected interleaving load *_52 and *_259
+matrix.c:90:3: note: Detected interleaving load *_52 and *_282
+matrix.c:90:3: note: Detected interleaving load *_52 and *_305
+matrix.c:90:3: note: Detected interleaving load *_52 and *_328
+matrix.c:90:3: note: Detected interleaving load *_52 and *_351
+matrix.c:90:3: note: Detected interleaving load *_52 and *_374
+matrix.c:90:3: note: Detected interleaving load *_52 and *_397
+matrix.c:90:3: note: grouped access in outer loop.
+matrix.c:90:3: note: not vectorized: complicated access pattern.
+matrix.c:90:3: note: bad data access.
+
+Analyzing loop at matrix.c:91
+matrix.c:91:4: note: ===== analyze_loop_nest =====
+matrix.c:91:4: note: === vect_analyze_loop_form ===
+matrix.c:91:4: note: === get_loop_niters ===
+matrix.c:91:4: note: === vect_analyze_data_refs ===
+matrix.c:91:4: note: got vectype for stmt: _47 = *_46;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _53 = *_52;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _58 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_46 = _60;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _70 = *_69;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _76 = *_75;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _81 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_69 = _83;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _93 = *_92;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _99 = *_98;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _104 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_92 = _106;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _116 = *_115;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _122 = *_121;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _127 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_115 = _129;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _139 = *_138;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _145 = *_144;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _150 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_138 = _152;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _162 = *_161;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _168 = *_167;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _173 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_161 = _175;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _185 = *_184;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _191 = *_190;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _196 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_184 = _198;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _208 = *_207;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _214 = *_213;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _219 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_207 = _221;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _231 = *_230;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _237 = *_236;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _242 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_230 = _244;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _254 = *_253;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _260 = *_259;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _265 = *_57;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: *_253 = _267;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _277 = *_276;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _283 = *_282;
+vector(2) double
+matrix.c:91:4: note: got vectype for stmt: _288 =
