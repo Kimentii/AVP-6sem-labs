@@ -87,11 +87,12 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile />
-      <AdditionalIncludeDirectories>$(AMDAPPSDKROOT)\include</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>$(AMDAPPSDKROOT)\include;C:/Users/Kimentii/AMD APP SDK/3.0/include;C:/Users/Kimentii/AMD APP SDK/3.0/include/SDKUtil</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996;4005</DisableSpecificWarnings>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
