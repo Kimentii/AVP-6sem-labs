@@ -9,4 +9,6 @@ a.out
 */lab3
 */lab2
 */lab1
+*/Debug
+*/.vs
 !gnuplot_i.o
