@@ -12,7 +12,7 @@
 	//printf("local_x: %d, local_y: %d, ", local_x, local_y);
 	int global_x = local_x + block_x * block_width;
 	int global_y = local_y + block_y * block_height;
-	printf("block_x: %d, block_y: %d, global_x: %d, global_y: %d, local_x: %d, local_y: %d\n", block_x, block_y, global_x, global_y, local_x, local_y);
+	//printf("block_x: %d, block_y: %d, global_x: %d, global_y: %d, local_x: %d, local_y: %d\n", block_x, block_y, global_x, global_y, local_x, local_y);
 	if(global_x >= max_matrix_width || global_y >= max_matrix_height) {
 		//printf("!!!!!!!global_x: %d, global_y: %d\n", global_x, global_y);
 		return;
