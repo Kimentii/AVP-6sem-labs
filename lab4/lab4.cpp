@@ -9,7 +9,7 @@
 #pragma comment(lib, "OpenCL.lib")
 
 const char KERNEL_FUN_NAME[] = "kernel_fun";
-const char KERNEL_FILE_NAME[] = "kernel.cl";
+const char KERNEL_FILE_NAME[] = "E:/study/AVP/AVP-6sem-labs/lab4/kernel.cl";
 const int NUM_OF_DIMENTIONS = 3;
 const int MAX_SOURCE_SIZE = 10000;
 
@@ -199,7 +199,7 @@ int main()
 	create_program();
 	show_device_info(device_id);
 
-	int matrix_width, matrix_height;
+	int matrix_width=512, matrix_height=512;
 	printf("input width: ");
 	scanf("%d", &matrix_width);
 	printf("input height: ");
@@ -229,6 +229,7 @@ int main()
 	calculate_block(matrix, result_matrix_opencl, required_matrix_width,required_matrix_heigth,
 		matrix_width,matrix_height, 
 		width_in_blocks, height_in_blocks);
+	//print_matrix(result_matrix_opencl, required_matrix_width, required_matrix_heigth);
 	unsigned __int64 start = __rdtsc();
 	integral_image_with_secret(matrix, result_matrix_c, required_matrix_width, required_matrix_heigth);
 	unsigned __int64 end = __rdtsc();
@@ -236,6 +237,10 @@ int main()
 	matrix_compare(result_matrix_opencl, result_matrix_c, (required_matrix_width * required_matrix_heigth));
 	//print_matrix(result_matrix_c, required_matrix_width, required_matrix_heigth);
 	//print_matrix(result_matrix_opencl, required_matrix_width, required_matrix_heigth);
+	clReleaseDevice(device_id);
+	clReleaseCommandQueue(command_queue);
+	clReleaseContext(context);
+	clReleaseProgram(program);
 	_getch();
     return 0;
 }

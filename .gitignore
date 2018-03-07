@@ -5,7 +5,9 @@ CMakeFiles
 *.o
 a.out
 *.swp
-*.swo]
+*.swo
+*/lab5
+*/lab4
 */lab3
 */lab2
 */lab1

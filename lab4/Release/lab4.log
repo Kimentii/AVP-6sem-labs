@@ -1,0 +1,11 @@
+﻿  lab4.cpp
+lab4.cpp(87): warning C4018: '<': signed/unsigned mismatch
+lab4.cpp(114): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'int'
+lab4.cpp(100): warning C4101: 'i': unreferenced local variable
+lab4.cpp(173): warning C4838: conversion from 'const int' to '::size_t' requires a narrowing conversion
+  Generating code
+  1 of 16 functions ( 6.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  lab4.vcxproj -> E:\study\AVP\AVP-6sem-labs\lab4\Release\lab4.exe

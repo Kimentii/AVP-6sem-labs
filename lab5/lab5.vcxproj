@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{C4FB68B9-74A3-4F87-9D34-45446F89B5CF}</ProjectGuid>
+    <ProjectGuid>{C04C5476-70DB-45D7-932A-7A511259B5FF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>lab4</RootNamespace>
+    <RootNamespace>lab5</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -87,17 +87,16 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile />
       <AdditionalIncludeDirectories>$(AMDAPPSDKROOT)\include;C:/Users/Kimentii/AMD APP SDK/3.0/include;C:/Users/Kimentii/AMD APP SDK/3.0/include/SDKUtil</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4996;4005</DisableSpecificWarnings>
       <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996;4005</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <TargetMachine />
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,17 +114,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(AMDAPPSDKROOT)\include;C:/Users/Kimentii/AMD APP SDK/3.0/include;C:/Users/Kimentii/AMD APP SDK/3.0/include/SDKUtil</AdditionalIncludeDirectories>
-      <PrecompiledHeaderFile />
-      <DisableSpecificWarnings>4996;4005</DisableSpecificWarnings>
-      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,13 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="integral_image.c" />
-    <ClCompile Include="lab4.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="kernel.cl" />
+    <ClCompile Include="lab5.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="integral_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="kernel.cl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
