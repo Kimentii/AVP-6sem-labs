@@ -6,6 +6,10 @@ CMakeFiles
 a.out
 *.swp
 *.swo
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*/Release
 */lab5
 */lab4
 */lab3
