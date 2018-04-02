@@ -4,6 +4,7 @@ CMakeFiles
 *.s
 *.o
 a.out
+*.sln
 *.swp
 *.swo
 *.vcxproj
