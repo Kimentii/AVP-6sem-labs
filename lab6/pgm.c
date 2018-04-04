@@ -1,16 +1,6 @@
-#ifndef LOAD_PGM
-#define LOAD_PGM
+#include "pgm.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct {
-	size_t sizeX, sizeY;
-	unsigned char *data;
-} PGMImage;
-
-static PGMImage* read_pgm(const char *filename)
+PGMImage* read_pgm(const char *filename)
 {
 	char buff[3];
 	PGMImage *result;
@@ -38,13 +28,12 @@ static PGMImage* read_pgm(const char *filename)
 
 	if (buff[0] != 'P' || buff[1] != '5')
 	{
-	fprintf(stderr, "Invalid image format (must be `P5')\n");
+		fprintf(stderr, "Invalid image format (must be `P5')\n");
 #if defined(WIN32) || defined(WIN64)
-	_getch();
+		_getch();
 #endif
-	exit(1);
+		exit(1);
 	}
-
 
 	result = (PGMImage *)malloc(sizeof(PGMImage));
 	if (!result)
@@ -63,7 +52,7 @@ static PGMImage* read_pgm(const char *filename)
 	{
 		fprintf(stderr, "Error1 loading image `%s'\n", filename);
 #if defined(WIN32) || defined(WIN64)
-				_getch();
+		_getch();
 #endif
 		exit(1);
 	}
@@ -100,11 +89,10 @@ void write_pgm(PGMImage* image, const char *filename)
 	FILE *fp;
 	fp = fopen(filename, "wb");
 	fprintf(fp, "P5\n");
-	fprintf(fp, "# created by Kimentii\n");
+	fprintf(fp, "# opencl\n");
 	fprintf(fp, "%lu %lu\n", image->sizeX, image->sizeY);
 	fprintf(fp, "255\n");
 	fwrite(image->data, sizeof(char), image->sizeX*image->sizeY, fp);
 	fclose(fp);
-	
+
 }
-#endif
