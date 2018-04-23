@@ -96,3 +96,19 @@ void write_pgm(PGMImage* image, const char *filename)
 	fclose(fp);
 
 }
+
+
+void matrix_show(mtype* matrix, int h, int w)
+{
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < w; j++) {
+			if (j < 10) {
+				printf("%d\t", matrix[i * w + j]);
+			}
+		}
+		printf("\n");
+		if (i >= 30) {
+			return;
+		}
+	}
+}
