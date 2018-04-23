@@ -6,7 +6,7 @@
 #include <string.h>
 
 typedef struct {
-	int sizeX, sizeY;
+	size_t sizeX, sizeY, pitch;
 	unsigned char *data;
 } PGMImage;
 

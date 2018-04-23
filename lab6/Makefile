@@ -1,5 +1,5 @@
 opencl_flags := -Wno-deprecated-declarations
-src_files := main.c cl_api.c matrix.c filter.c
+src_files := main.c cl_api.c matrix.c filter.c pgm.c
 
 main: clean main.c cl_api.c matrix.c
 	gcc ${src_files} -o $@ ${opencl_flags} -lOpenCL
