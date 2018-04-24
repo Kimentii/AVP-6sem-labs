@@ -1,10 +1,12 @@
 // define FILTER_SIZE
-#define GROUP_SIZE    2
+#define GROUP_SIZE    16
 #define BANK_ROW_SIZE 256
 #define ROW_SIZE 8
 #define KERNEL_ROW_FETCH_NUM ROW_SIZE/GROUP_SIZE
-#define LOCAL_W (GROUP_SIZE + ((FILTER_SIZE/2)*2))
-#define LOCAL_H (ROW_SIZE + ((FILTER_SIZE/2)*2))
+#define LOCAL_W GROUP_SIZE
+#define LOCAL_H GROUP_SIZE
+#define LOCAL_RESULT_W (LOCAL_W - FILTER_SIZE)
+#define LOCAL_RESULT_H (LOCAL_H - FILTER_SIZE)
 
 __kernel void kernel_fun(
 	__global unsigned char* input_image, 
@@ -24,41 +26,43 @@ __kernel void kernel_fun(
 	// 1. load filter in local memory
 	// 2. load group data in local memory
 	// 3. apply filter
-	//int a = 5;
 	__local float filter[FILTER_SIZE * FILTER_SIZE];
-	__local uchar local_work[LOCAL_W * LOCAL_H];
-	if (y < FILTER_SIZE*FILTER_SIZE) {
-		filter[x] = global_filter[y];
+	int filter_copy_times = FILTER_SIZE*FILTER_SIZE/GROUP_SIZE + 1;
+	for (int i = 0; i < filter_copy_times; i++) {
+		if ((x+i*GROUP_SIZE) < FILTER_SIZE*FILTER_SIZE) {
+			filter[x + i*GROUP_SIZE] = global_filter[x + i*GROUP_SIZE];
+		}
 	}
-	for (int i = 0; i < LOCAL_H; i++) {
-		uchar4 item_data = vload4(i*p + y*4, input_image);
-		vstore4(item_data, i*w + y*4, local_work);
-	}
-	barrier(CLK_LOCAL_MEM_FENCE);
 
+	__local uchar local_work[LOCAL_W * LOCAL_H];
+	long local_work_offset = (LOCAL_H - FILTER_SIZE/2)*gy*p + (LOCAL_W - FILTER_SIZE/2)*gx;
+	for (int i = 0; i < LOCAL_H; i++) {
+		//uchar4 item_data = vload4(i*p + y*4, input_image);
+		//vstore4(item_data, i*w + y*4, local_work);
+		local_work[i*LOCAL_W + x] = input_image[local_work_offset + i*p + x];
+	}
+	__local uchar local_result[LOCAL_RESULT_H * LOCAL_RESULT_W];
+	barrier(CLK_LOCAL_MEM_FENCE);
+	
 	// filtering
-//	for (int i = 0; i < ROW_SIZE; i++) {
-//		__private cell_value = 0;
-//		for (int n = 0; n < FILTER_SIZE; n++) {
-//			for (int m = 0; m < FILTER_SIZE; m++) {
-//				__private float filter_value = filter[n*FILTER_SIZE + m];
-//				__private char neighbour = 0;
-//				__private long fetch_addr = (y - FILTER_SIZE/2 + n)*p + (i - FILTER_SIZE/2 + m);   
-//				if (fetch_addr < 0) {
-//					neighbour = 0;
-//				} else {
-//					neighbour = input_image[fetch_addr];
-//				}
-//				cell_value += (uchar)(filter_value * neighbour);
-//			}
-//		}
-//		output_image[y*p + i] = cell_value;
-//	}
-//
-//	for (int i = 0; i < KERNEL_ROW_FETCH_NUM; i++) {
-//		for (int j = 0; j < 4; j++) {
-//			output_image[y*w + i*4 + j] = local_work[y*w + i*4 + j];//(unsigned char)(filter[filter_value]);
-//		}
-//	}
+	if (x < LOCAL_RESULT_W) {
+		for (int i = 0; i < LOCAL_RESULT_H; i++) {
+			__private uchar result = 0;
+			for (int n = 0; n < FILTER_SIZE; n++) {
+				for (int m = 0; m < FILTER_SIZE; m++) {
+					__private float filter_value = filter[n*FILTER_SIZE + m];
+					__private uchar cell_value = local_work[(i+n)*LOCAL_W + x + m];
+					result += (uchar)(filter_value * cell_value);
+				}
+			}
+			local_result[(i + FILTER_SIZE/2)*LOCAL_W + x + FILTER_SIZE/2] = 3;// result;
+		}
+	}
+	//__private long output_offset = (LOCAL_H - FILTER_SIZE)*gy*w + (LOCAL_W - FILTER_SIZE)*gx + i*w + x;
+	for (int i = 0; i < LOCAL_RESULT_H; i++) {
+		if (x < LOCAL_RESULT_W) {
+			output_image[(LOCAL_RESULT_H*gy + i)*w + LOCAL_RESULT_W*gx + x] = local_result[i*LOCAL_RESULT_W + x];
+		}
+	}
 	//printf("%s", "done\n");
 }

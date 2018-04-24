@@ -106,8 +106,8 @@ int main()
 	}
 
 	//const size_t work_size[2] = {input_image->sizeX,	input_image->sizeY};
-	const size_t work_size[2] = {2, 1};
-	const size_t group_size[2] = {2, 1};
+	const size_t work_size[2] = {16, 1};
+	const size_t group_size[2] = {16, 1};
 	cl_kernel kernel = clCreateKernel(program, KERNEL_FUN, &cl_errno);
 	if (cl_errno != CL_SUCCESS) {
 		printf("cl_errno: %d\n", cl_errno);
@@ -163,7 +163,7 @@ int main()
 
 	for (int i = 0; i < input_image->sizeY; i++) {
 		for (int j = 0; j < input_image->sizeX; j++) {
-			printf("%d ", ((unsigned char*)(result))[i*input_image->sizeX+j]);
+			printf("%d\t", ((unsigned char*)(result))[i*input_image->sizeX+j]);
 		}
 		printf("\n");
 	}

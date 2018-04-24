@@ -245,4 +245,3 @@ void write_pgm_with_frame(PGMImage* image, const char *filename)
 	}
 	fclose(fp);
 }
->>>>>>> 77184894141c4ab95406576cbd4185f48aa510f4
