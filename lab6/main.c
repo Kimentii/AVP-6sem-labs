@@ -4,14 +4,20 @@
 #include "pgm.h"
 #include "matrix.h"
 #include "filter.h"
+#if defined(WIN32) || defined(WIN64)
+#include <conio.h>
+#pragma comment(lib, "OpenCL.lib")
+#endif
 
 #define WAVEFRONT_SIZE 64
 #define GLOBAL_BANK_ROW_SIZE 256
 
 #define KERNEL_FILE_NAME "kernel.cl"
 #define KERNEL_FUN "kernel_fun"
-#define INPUT_IMG_NAME "monkey.pgm"
+#define INPUT_IMG_NAME "image.pgm"
 #define OUTPUT_IMG_NAME "out_image.pgm"
+const int BLOCK_WIDTH = 256;
+const int BLOCK_HEIGHT = 1;
 
 int main()
 {
@@ -159,5 +165,8 @@ queue_release:
 context_release:
 	clReleaseContext(context);
 exit:
+#if defined(WIN32) || defined(WIN64)
+_getch();
+#endif
 	return 0;
 }
