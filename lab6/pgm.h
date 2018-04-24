@@ -11,7 +11,7 @@ typedef struct {
 } PGMImage;
 
 PGMImage* read_pgm(const char *filename);
-
+PGMImage* mock_pgm(int h, int w);
 void write_pgm(PGMImage* image, const char *filename);
 
 #endif

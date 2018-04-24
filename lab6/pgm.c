@@ -96,3 +96,18 @@ void write_pgm(PGMImage* image, const char *filename)
 	fclose(fp);
 
 }
+
+PGMImage* mock_pgm(int h, int w)
+{
+	PGMImage* mock = (PGMImage*)malloc(sizeof(PGMImage));
+	mock->data = (unsigned char*)malloc(h * w);
+	mock->sizeX = w;
+	mock->sizeY = h;
+	mock->pitch = w;
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < w; j++) {
+			mock->data[i*w + j] = (unsigned char)((i+j)%5);
+		}
+	}
+	return mock;
+}

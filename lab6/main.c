@@ -17,9 +17,8 @@ int main()
 {
 	int filter_size = 3;
 	ftype* filter = get_filter(filter_size, filter_size, FILTER_TYPE_BLUR);
-	normalize_filter(filter, filter_size, filter_size, 1);
-	matrix_show(filter, filter_size, filter_size);
-
+	normalize_filter(filter, filter_size, filter_size, 100);
+	//matrix_show(filter, filter_size, filter_size);
 
 	cl_platform_id platform_id = get_platform_id();
 	if (call_errno != CALL_SUCCESS) {
@@ -44,9 +43,10 @@ int main()
 		printf("Error during creating command queue: %d\n", cl_errno);
 		goto context_release;
 	}
-	
-	PGMImage* input_image = read_pgm(INPUT_IMG_NAME);
+
+	PGMImage* input_image = mock_pgm(16, 16);//read_pgm(INPUT_IMG_NAME);
 	//mtype *source_matrix = matrix_create(MATRIX_WIDTH, MATRIX_HEIGHT);
+	input_image->pitch = input_image->sizeX;
 
 	cl_mem input_buffer = clCreateBuffer(
 		context, 
@@ -56,10 +56,12 @@ int main()
 		&cl_errno
 	);
 	if (cl_errno != CL_SUCCESS) {
-		printf("Error during input buffer allocation\n");
+		printf("Error during input buffer allocation: %d\n", cl_errno);
 		goto cl_input_buffer_release;
 	}
 
+	void* result = malloc(input_image->pitch * input_image->sizeY);
+	memset(result, 0, input_image->pitch * input_image->sizeY);
 	cl_mem output_buffer = clCreateBuffer(
 		context, 
 		CL_MEM_WRITE_ONLY, 
@@ -84,24 +86,50 @@ int main()
 	}
 	
 	cl_program program = get_cl_program(context, KERNEL_FILE_NAME);
-	cl_errno = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
+	char filter_size_define[32];
+	if (sprintf(filter_size_define, "-DFILTER_SIZE=%d", filter_size) < 0) {
+		printf("Can not set group size define for OpenCL program, exit\n");
+		goto cl_filter_buffer_release;
+	} else {
+		//printf("Adding define: %s\n", group_size_define);
+	}
+	cl_errno = clBuildProgram(program, 1, &device_id, filter_size_define, NULL, NULL);
 	if (cl_errno != CL_SUCCESS) {
 		printf("Error during building program: %d\n", cl_errno);
 		exit(0);
 	}
 
-	const size_t work_size[2] = {input_image->sizeX,	input_image->sizeY};
-	const size_t group_size[2] = {WAVEFRONT_SIZE, 1};
-	cl_kernel vertical_kernel = clCreateKernel(program, "image_vertical", NULL);
-	clSetKernelArg(vertical_kernel, 0, sizeof(cl_mem), (void*)&input_buffer);
-	clSetKernelArg(vertical_kernel, 1, sizeof(cl_mem), (void*)&output_buffer);
-	clSetKernelArg(vertical_kernel, 2, sizeof(long int), (void*)&input_image->sizeX);
-	clSetKernelArg(vertical_kernel, 4, sizeof(long int), (void*)&input_image->sizeY);
-	clSetKernelArg(vertical_kernel, 5, sizeof(cl_mem), (void*)&filter_buffer);
-	clSetKernelArg(vertical_kernel, 6, sizeof(int), (void*)&filter_size);
+	//const size_t work_size[2] = {input_image->sizeX,	input_image->sizeY};
+	const size_t work_size[2] = {2, 1};
+	const size_t group_size[2] = {2, 1};
+	cl_kernel kernel = clCreateKernel(program, KERNEL_FUN, &cl_errno);
+	if (cl_errno != CL_SUCCESS) {
+		printf("cl_errno: %d\n", cl_errno);
+	}
+	cl_errno = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void*)&input_buffer);
+	if (cl_errno != CL_SUCCESS) {
+		printf("arg0 cl_errno: %d\n", cl_errno);
+	}
+	cl_errno = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void*)&output_buffer);
+	if (cl_errno != CL_SUCCESS) {
+		printf("arg1 cl_errno: %d\n", cl_errno);
+	}
+	clSetKernelArg(kernel, 2, sizeof(size_t), (void*)&input_image->sizeX);
+	if (cl_errno != CL_SUCCESS) {
+		printf("arg2 cl_errno: %d\n", cl_errno);
+	}
+	clSetKernelArg(kernel, 3, sizeof(size_t), (void*)&input_image->sizeY);
+	if (cl_errno != CL_SUCCESS) {
+		printf("arg3 cl_errno: %d\n", cl_errno);
+	}
+	clSetKernelArg(kernel, 4, sizeof(size_t), (void*)&input_image->pitch);
+	if (cl_errno != CL_SUCCESS) {
+		printf("arg3 cl_errno: %d\n", cl_errno);
+	}
+	clSetKernelArg(kernel, 5, sizeof(cl_mem), (void*)&filter_buffer);
 	clEnqueueNDRangeKernel(
 		queue, 
-		vertical_kernel, 
+		kernel, 
 		2, 
 		0, 
 		work_size, 
@@ -111,41 +139,53 @@ int main()
 		NULL
 	);
 	clFinish(queue);
-//	void* result_matrix[input_image->pitch * input_image->sizeY];
-//	cl_errno = clEnqueueReadBuffer(
-//		queue, 
-//		output_buffer, 
-//		CL_BLOCKING, 
-//		0, 
-//		MATRIX_SIZE_BYTES, 
-//		result_matrix, 
-//		0,
-//		NULL, 
-//		NULL
-//	);
-//	if (cl_errno != CL_SUCCESS) {
-//		printf("Error during reading result matrix: %d\n", cl_errno);
-//		goto matrix_release;
+	cl_errno = clEnqueueReadBuffer(
+		queue,
+		output_buffer, 
+		CL_BLOCKING, 
+		0, 
+		input_image->pitch * input_image->sizeY, 
+		result, 
+		0,
+		NULL, 
+		NULL
+	);
+	if (cl_errno != CL_SUCCESS) {
+		printf("Error during reading result matrix: %d\n", cl_errno);
+	}
+	clFinish(queue);
+
+	for (int i = 0; i < input_image->sizeY; i++) {
+		for (int j = 0; j < input_image->sizeX; j++) {
+			printf("%d ", ((unsigned char*)(result))[i*input_image->sizeX+j]);
+		}
+		printf("\n");
+	}
+//	printf("========");
+//	for (int i = 0; i < input_image->sizeY; i++) {
+//		for (int j = 0; j < input_image->sizeX; j++) {
+//			printf("%d ", ((unsigned char*)(result))[i*input_image->sizeX+j]);
+//		}
+//		printf("\n");
 //	}
-//	clFinish(queue);
-//	long long cl_time = rdtsc() - cl_time_start;
-//	printf("====\n");
 //
-//	long long c_time_start = rdtsc();
-//	mtype* c_result = matrix_int_img(source_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
-//	long long c_time = rdtsc() - c_time_start;
-//
-//	if(memcmp(c_result, result_matrix, MATRIX_SIZE_BYTES) == 0) {
-//		printf("Validation success!\n");
-//	}	else {
-//		printf("Validation failed!\n");
-//	}
-//		printf("CL time: \t%lld\n", cl_time);
-//		printf("C time: \t%lld\n", c_time);
-//	//matrix_show(result_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
-//	//printf("=== C ===\n");
-//	//matrix_show(c_result, MATRIX_HEIGHT, MATRIX_WIDTH);
-//
+//	
+////
+////	long long c_time_start = rdtsc();
+////	mtype* c_result = matrix_int_img(source_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
+////	long long c_time = rdtsc() - c_time_start;
+////
+////	if(memcmp(c_result, result_matrix, MATRIX_SIZE_BYTES) == 0) {
+////		printf("Validation success!\n");
+////	}	else {
+////		printf("Validation failed!\n");
+////	}
+////		printf("CL time: \t%lld\n", cl_time);
+////		printf("C time: \t%lld\n", c_time);
+////	//matrix_show(result_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
+////	//printf("=== C ===\n");
+////	//matrix_show(c_result, MATRIX_HEIGHT, MATRIX_WIDTH);
+////
 cl_program_release:
 	clReleaseProgram(program);
 cl_filter_buffer_release:
