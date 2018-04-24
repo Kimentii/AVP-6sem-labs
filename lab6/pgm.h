@@ -14,6 +14,8 @@ PGMImage* read_pgm(const char *filename);
 
 void resize_image(PGMImage* image, const int block_width, const int block_height);
 
+void show_iamge_part(PGMImage* image, const int width, const int height);
+
 void write_pgm(PGMImage* image, const char *filename);
 
 #endif

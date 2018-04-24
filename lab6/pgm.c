@@ -113,6 +113,17 @@ void resize_image(PGMImage* image, const int block_width, const int block_height
 	image->pitch = required_matrix_width;
 }
 
+void show_iamge_part(PGMImage* image, const int width, const int height)
+{
+	int image_width = (image->pitch > 0) ? image->pitch : image->sizeX;
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			printf("%4d", image->data[i * image_width + j]);
+		}
+		printf("\n");
+	}
+}
+
 void write_pgm(PGMImage* image, const char *filename)
 {
 	FILE *fp;
