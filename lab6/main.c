@@ -9,7 +9,11 @@
 #pragma comment(lib, "OpenCL.lib")
 #endif
 
+#define FILTER_SIZE 3
+
 #define WAVEFRONT_SIZE 64
+#define GROUP_SIZE 8
+#define COMPUTING_GROUP_SIZE (GROUP_SIZE - (FILTER_SIZE - 1))
 #define GLOBAL_BANK_ROW_SIZE 256
 
 #define KERNEL_FILE_NAME "kernel.cl"
@@ -21,9 +25,9 @@ const int BLOCK_HEIGHT = 1;
 
 int main()
 {
-	int filter_size = 3;
+	int filter_size = FILTER_SIZE;
 	ftype* filter = get_filter(filter_size, filter_size, FILTER_TYPE_BLUR);
-	normalize_filter(filter, filter_size, filter_size, 100);
+	normalize_filter(filter, filter_size, filter_size, 15);
 	//matrix_show(filter, filter_size, filter_size);
 
 	cl_platform_id platform_id = get_platform_id();
@@ -50,7 +54,8 @@ int main()
 		goto context_release;
 	}
 
-	PGMImage* input_image = mock_pgm(16, 16);//read_pgm(INPUT_IMG_NAME);
+	PGMImage* input_image = mock_pgm(10, 10);
+	add_frame(input_image, 1);//(FILTER_SIZE/2));//read_pgm(INPUT_IMG_NAME);
 	//mtype *source_matrix = matrix_create(MATRIX_WIDTH, MATRIX_HEIGHT);
 	input_image->pitch = input_image->sizeX;
 
@@ -106,8 +111,14 @@ int main()
 	}
 
 	//const size_t work_size[2] = {input_image->sizeX,	input_image->sizeY};
-	const size_t work_size[2] = {16, 1};
-	const size_t group_size[2] = {16, 1};
+	
+	size_t groups_x = input_image->sizeX/COMPUTING_GROUP_SIZE;
+	if (input_image->sizeX % COMPUTING_GROUP_SIZE != 0) groups_x++;
+	size_t groups_y = input_image->sizeY/COMPUTING_GROUP_SIZE;
+	if (input_image->sizeY % COMPUTING_GROUP_SIZE != 0) groups_y++;
+	printf("work size: [%d, %d]\n", groups_x, groups_y); 
+	const size_t work_size[2] = {groups_x * GROUP_SIZE, 1};
+	const size_t group_size[2] = {GROUP_SIZE, 1};
 	cl_kernel kernel = clCreateKernel(program, KERNEL_FUN, &cl_errno);
 	if (cl_errno != CL_SUCCESS) {
 		printf("cl_errno: %d\n", cl_errno);
@@ -130,7 +141,7 @@ int main()
 	}
 	clSetKernelArg(kernel, 4, sizeof(size_t), (void*)&input_image->pitch);
 	if (cl_errno != CL_SUCCESS) {
-		printf("arg3 cl_errno: %d\n", cl_errno);
+		printf("arg4 cl_errno: %d\n", cl_errno);
 	}
 	clSetKernelArg(kernel, 5, sizeof(cl_mem), (void*)&filter_buffer);
 	clEnqueueNDRangeKernel(
@@ -160,38 +171,20 @@ int main()
 		printf("Error during reading result matrix: %d\n", cl_errno);
 	}
 	clFinish(queue);
-
-	for (int i = 0; i < input_image->sizeY; i++) {
+	printf("input_image size: [%d, %d]\n", input_image->sizeX, input_image->sizeY);
+	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < input_image->sizeX; j++) {
-			printf("%d\t", ((unsigned char*)(result))[i*input_image->sizeX+j]);
+			printf("%d ", ((unsigned char*)(result))[i*input_image->sizeX+j]);
 		}
 		printf("\n");
 	}
-//	printf("========");
-//	for (int i = 0; i < input_image->sizeY; i++) {
-//		for (int j = 0; j < input_image->sizeX; j++) {
-//			printf("%d ", ((unsigned char*)(result))[i*input_image->sizeX+j]);
-//		}
-//		printf("\n");
-//	}
-//
-//	
-////
-////	long long c_time_start = rdtsc();
-////	mtype* c_result = matrix_int_img(source_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
-////	long long c_time = rdtsc() - c_time_start;
-////
-////	if(memcmp(c_result, result_matrix, MATRIX_SIZE_BYTES) == 0) {
-////		printf("Validation success!\n");
-////	}	else {
-////		printf("Validation failed!\n");
-////	}
-////		printf("CL time: \t%lld\n", cl_time);
-////		printf("C time: \t%lld\n", c_time);
-////	//matrix_show(result_matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
-////	//printf("=== C ===\n");
-////	//matrix_show(c_result, MATRIX_HEIGHT, MATRIX_WIDTH);
-////
+	printf("========\n");
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < input_image->pitch + 2; j++) {
+			printf("%d ", ((unsigned char*)(input_image->data))[i*(input_image->sizeX+2)+j]);
+		}
+		printf("\n");
+	}
 cl_program_release:
 	clReleaseProgram(program);
 cl_filter_buffer_release:

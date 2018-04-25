@@ -173,6 +173,7 @@ void add_frame(PGMImage* image, const int frame_size)
 				= image->data[(image->sizeY - 1)*image->sizeX + image->sizeX-1];
 		}
 	}
+	free(image->data);
 	image->data = result_data;
 	image->frame_size = frame_size;
 }
@@ -204,16 +205,16 @@ void write_pgm(PGMImage* image, const char *filename)
 	fclose(fp);
 }
 
-PGMImage* mock_pgm(int h, int w)
+PGMImage* mock_pgm(int w, int h)
 {
 	PGMImage* mock = (PGMImage*)malloc(sizeof(PGMImage));
-	mock->data = (unsigned char*)malloc(h * w);
+	mock->data = (unsigned char*)malloc(h*w);
 	mock->sizeX = w;
 	mock->sizeY = h;
 	mock->pitch = w;
 	for (int i = 0; i < h; i++) {
 		for (int j = 0; j < w; j++) {
-			mock->data[i*w + j] = (unsigned char)((i+j)%5);
+			mock->data[i*w + j] = (unsigned char)(j%4);
 		}
 	}
 	return mock;

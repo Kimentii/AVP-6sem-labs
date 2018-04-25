@@ -12,7 +12,7 @@ typedef struct {
 
 PGMImage* read_pgm(const char *filename);
 
-PGMImage* mock_pgm(int h, int w);
+PGMImage* mock_pgm(int w, int h);
 
 void resize_image(PGMImage* image, const int block_width, const int block_height);
 
