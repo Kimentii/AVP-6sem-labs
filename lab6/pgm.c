@@ -220,6 +220,25 @@ PGMImage* mock_pgm(int w, int h)
 	return mock;
 }
 
+PGMImage* mock_pgm_pitch(int w, int h, int p)
+{
+	PGMImage* mock = (PGMImage*)malloc(sizeof(PGMImage));
+	mock->data = (unsigned char*)malloc(h*p);
+	mock->sizeX = w;
+	mock->sizeY = h;
+	mock->pitch = p;
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < p; j++) {
+			if (j < w) {
+				mock->data[i*p + j] = (unsigned char)(j%4);
+			} else {
+				mock->data[i*p + j] = 5;
+			}
+		}
+	}
+	return mock;
+}
+
 void write_pgm_with_frame(PGMImage* image, const char *filename)
 {
 
