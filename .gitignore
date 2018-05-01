@@ -20,3 +20,5 @@ a.out
 */.vs
 !gnuplot_i.o
 tags
+gpu_result.pgm
+cpu_result.pgm

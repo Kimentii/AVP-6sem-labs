@@ -27,8 +27,8 @@ const int BLOCK_HEIGHT = 1;
 int main(int argc, char* argv[])
 {
 	char* input_image_name;
-	int filter_size = atoi(argv[1]);
-	int computing_group_size = GROUP_SIZE - (filter_size - 1);
+	int filter_size = 3;
+	if (argc > 1) filter_size = atoi(argv[1]);
 	if (argc > 2) {
 		input_image_name = argv[2];
 	} else {
@@ -62,17 +62,24 @@ int main(int argc, char* argv[])
 		goto context_release;
 	}
 
-	PGMImage* input_image = read_pgm(input_image_name);
+	// image 4x2
+	// group size 4x1
+	// grid size 1x4
+	PGMImage* input_image = mock_pgm(18, 4);
+	input_image->sizeX = 4;
+	input_image->pitch = 18;
+	input_image->sizeY = 2;
+	input_image->frame_size = 1;
 	size_t imgX = input_image->sizeX;
 	size_t imgY = input_image->sizeY;
-	add_frame(input_image, filter_size/2);
-	resize_image(input_image, BLOCK_WIDTH, 1);
+	//add_frame(input_image, filter_size/2);
+	//resize_image(input_image, BLOCK_WIDTH, 1);
 
 	time_snap();
 	cl_mem input_buffer = clCreateBuffer(
 		context, 
 		CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, 
-		input_image->pitch * (imgY + 2 * input_image->frame_size), 
+		input_image->pitch * (imgY + 3 * 2 * input_image->frame_size), 
 		input_image->data, 
 		&cl_errno
 	);
@@ -81,12 +88,12 @@ int main(int argc, char* argv[])
 		goto cl_input_buffer_release;
 	}
 
-	unsigned char* gpu_result = malloc(input_image->pitch * input_image->sizeY);
-	memset(gpu_result, 0, input_image->pitch * input_image->sizeY);
+	unsigned char* gpu_result = malloc(input_image->sizeX * 3 * input_image->sizeY);
+	memset(gpu_result, 0, input_image->sizeX * 3 * imgY);
 	cl_mem output_buffer = clCreateBuffer(
 		context, 
 		CL_MEM_WRITE_ONLY, 
-		imgX * imgY, 
+		imgX * 3 * imgY, 
 		NULL, 
 		&cl_errno
 	);
@@ -121,15 +128,21 @@ int main(int argc, char* argv[])
 	}
 	uint64_t build_time = time_elapsed();
 	
-	size_t groups_x = imgX/computing_group_size;
-	if (imgX % computing_group_size != 0) groups_x++;
+	size_t group_x_size = 9;//64;
+	size_t group_x_pixels = group_x_size/3 - (filter_size - 1);
+	size_t group_y_size = 4;
+	size_t group_y_pixels = 4 - (filter_size - 1);
+	size_t groups_x = imgX/group_x_pixels;
+	if (imgX % group_x_pixels != 0) groups_x++;
 
-	size_t groups_y = imgY/computing_group_size;
-	if (imgY % computing_group_size != 0) groups_y++;
+	size_t groups_y = imgY/group_y_pixels;
+	if (imgY % group_y_pixels != 0) groups_y++;
 
 	printf("work size: [%ld, %ld]\n", groups_x, groups_y); 
-	const size_t work_size[2] = {groups_x * GROUP_SIZE, groups_y};
-	const size_t group_size[2] = {GROUP_SIZE, 1};
+	const size_t work_size[2] = {group_x_size*groups_x, group_y_size*groups_y};
+	//const size_t work_size[2] = {groups_x * 64, groups_y * 4};
+	const size_t group_size[2] = {group_x_size, group_y_size};
+	//const size_t group_size[2] = {64, 4};
 
 	cl_kernel kernel = clCreateKernel(program, KERNEL_FUN, &cl_errno);
 	if (cl_errno != CL_SUCCESS) {
@@ -178,7 +191,7 @@ int main(int argc, char* argv[])
 		output_buffer, 
 		CL_BLOCKING, 
 		0, 
-		imgX * imgY, 
+		(imgX * 3) * imgY, 
 		gpu_result, 
 		0,
 		NULL, 
@@ -189,32 +202,36 @@ int main(int argc, char* argv[])
 		printf("Error during reading result matrix: %d\n", cl_errno);
 	}
 	time_snap();
-	unsigned char* cpu_result = filter_via_cpu(input_image, filter, filter_size);
+//	unsigned char* cpu_result = filter_via_cpu(input_image, filter, filter_size);
 	uint64_t cpu_time = time_elapsed();
 	printf("input_image size: [%ld, %ld]\n", imgX, imgY);
-	printf("Memcmp: %d\n", memcmp(cpu_result, gpu_result, imgX*imgY));
-	printf("%-25s: %15lu\n", "GPU time", gpu_all_time);
-	printf("%-25s: %15lu\n", "--> buf alloc time", buffers_allocation_time);
-	printf("%-25s: %15lu\n", "--> build time", build_time - buffers_allocation_time);
-	printf("%-25s: %15lu\n", "--> args prep time", args_prep_time - build_time);
-	printf("%-25s: %15lu\n", "--> result read time", gpu_all_time - gpu_exec_time);
-	printf("%-25s: %15lu\n", "--> execution time", gpu_exec_time - args_prep_time);
-	printf("%-25s: %15lu\n", "CPU time", cpu_time);
 
-	PGMImage gpu_image, cpu_image;
-	gpu_image.sizeX = imgX;
-	gpu_image.sizeY = imgY;
-	gpu_image.data = gpu_result;
-	gpu_image.pitch = imgX;
-	gpu_image.frame_size = 0;
-	cpu_image.sizeX = imgX;
-	cpu_image.sizeY = imgY;
-	cpu_image.pitch = imgX;
-	cpu_image.frame_size = 0;
-	cpu_image.data = cpu_result;
+	matrix_uchar_show(input_image->data, input_image->pitch, input_image->sizeY + (filter_size-1));
+	printf("=== result ===\n");
+	matrix_uchar_show(gpu_result, imgX*3, imgY);
+//	printf("Memcmp: %d\n", memcmp(cpu_result, gpu_result, imgX*imgY));
+//	printf("%-25s: %15lu\n", "GPU time", gpu_all_time);
+//	printf("%-25s: %15lu\n", "--> buf alloc time", buffers_allocation_time);
+//	printf("%-25s: %15lu\n", "--> build time", build_time - buffers_allocation_time);
+//	printf("%-25s: %15lu\n", "--> args prep time", args_prep_time - build_time);
+//	printf("%-25s: %15lu\n", "--> result read time", gpu_all_time - gpu_exec_time);
+//	printf("%-25s: %15lu\n", "--> execution time", gpu_exec_time - args_prep_time);
+//	printf("%-25s: %15lu\n", "CPU time", cpu_time);
 
-	write_pgm(&gpu_image, "gpu_result.pgm");
-	write_pgm(&cpu_image, "cpu_result.pgm");
+//	PGMImage gpu_image, cpu_image;
+//	gpu_image.sizeX = imgX;
+//	gpu_image.sizeY = imgY;
+//	gpu_image.data = gpu_result;
+//	gpu_image.pitch = imgX;
+//	gpu_image.frame_size = 0;
+//	cpu_image.sizeX = imgX;
+//	cpu_image.sizeY = imgY;
+//	cpu_image.pitch = imgX;
+//	cpu_image.frame_size = 0;
+//	cpu_image.data = cpu_result;
+//
+//	write_pgm(&gpu_image, "gpu_result.pgm");
+//	write_pgm(&cpu_image, "cpu_result.pgm");
 
 cl_program_release:
 	clReleaseProgram(program);
