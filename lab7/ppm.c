@@ -1,9 +1,9 @@
-#include "pgm.h"
+#include "ppm.h"
 
-PGMImage* read_pgm(const char *filename)
+PPMImage* read_ppm(const char *filename)
 {
 	char buff[3];
-	PGMImage *result;
+	PPMImage *result;
 	FILE *fp;
 	int maxval;
 
@@ -11,38 +11,26 @@ PGMImage* read_pgm(const char *filename)
 	if (!fp)
 	{
 		fprintf(stderr, "Unable to open file `%s'\n", filename);
-#if defined(WIN32) || defined(WIN64)
-		_getch();
-#endif
-		exit(1);
+		goto error;
 	}
 
 	if (!fgets(buff, sizeof(buff), fp))
 	{
 		perror(filename);
-#if defined(WIN32) || defined(WIN64)
-		_getch();
-#endif
-		exit(1);
+		goto error;
 	}
 
-	if (buff[0] != 'P' || buff[1] != '5')
+	if (buff[0] != 'P' || buff[1] != '6')
 	{
-		fprintf(stderr, "Invalid image format (must be `P5')\n");
-#if defined(WIN32) || defined(WIN64)
-		_getch();
-#endif
-		exit(1);
+		fprintf(stderr, "Invalid image format (must be `P3')\n");
+		goto error;
 	}
 
-	result = (PGMImage *)malloc(sizeof(PGMImage));
+	result = (PPMImage *)malloc(sizeof(PPMImage));
 	if (!result)
 	{
 		fprintf(stderr, "Unable to allocate memory\n");
-#if defined(WIN32) || defined(WIN64)
-		_getch();
-#endif
-		exit(1);
+		goto error;
 	}
 
 	fgetc(fp);
@@ -51,41 +39,43 @@ PGMImage* read_pgm(const char *filename)
 	if (fscanf(fp, "%lu %lu", &result->sizeX, &result->sizeY) != 2)
 	{
 		fprintf(stderr, "Error1 loading image `%s'\n", filename);
-#if defined(WIN32) || defined(WIN64)
-		_getch();
-#endif
-		exit(1);
+		goto error;
 	}
 
 
 	if (fscanf(fp, "%d", &maxval) != 1)
 	{
 		fprintf(stderr, "Error loading image `%s'\n", filename);
-		exit(1);
+		goto error;
 	}
 
 	while (fgetc(fp) != '\n');
 
-	result->data = (unsigned char *)malloc(result->sizeX * result->sizeY);
+	result->data = (unsigned char *)malloc(result->sizeX * 3 * result->sizeY);
 	if (!result)
 	{
 		fprintf(stderr, "Unable to allocate memory\n");
-		exit(1);
+		goto error;
 	}
 
-	if (fread(result->data, result->sizeX, result->sizeY, fp) != result->sizeY)
+	if (fread(result->data, 3 * sizeof(char) , result->sizeY * result->sizeX, fp) != result->sizeY * result->sizeX)
 	{
 		fprintf(stderr, "Error loading image `%s'\n", filename);
-		exit(1);
+		goto error;
 	}
-	fclose(fp);
 
 	result->pitch = 0;
 	result->frame_size = 0;
 	return result;
+
+error:
+#if defined(WIN32) || defined(WIN64)
+	_getch();
+#endif
+	exit(1);
 }
 
-void resize_image(PGMImage* image, const int block_width, const int block_height)
+void resize_image(PPMImage* image, const int block_width, const int block_height)
 {
 	int image_width = image->sizeX + 2 * image->frame_size;
 	int image_heigth = image->sizeY + 2 * image->frame_size;
@@ -115,7 +105,7 @@ void resize_image(PGMImage* image, const int block_width, const int block_height
 	image->pitch = required_matrix_width;
 }
 
-void show_iamge_part(PGMImage* image, const int width, const int height)
+void show_iamge_part(PPMImage* image, const int width, const int height)
 {
 	int image_width = (image->pitch > 0) ? image->pitch : image->sizeX;
 	for (int i = 0; i < height; i++) {
@@ -126,7 +116,7 @@ void show_iamge_part(PGMImage* image, const int width, const int height)
 	}
 }
 
-void add_frame(PGMImage* image, const int frame_size)
+void add_frame(PPMImage* image, const int frame_size)
 {
 	int new_image_width = image->sizeX + frame_size * 2;
 	int new_image_height = image->sizeY + frame_size * 2;
@@ -178,11 +168,11 @@ void add_frame(PGMImage* image, const int frame_size)
 	image->frame_size = frame_size;
 }
 
-void write_pgm(PGMImage* image, const char *filename)
+void write_ppm(PPMImage* image, const char *filename)
 {
 	FILE *fp;
 	fp = fopen(filename, "wb");
-	fprintf(fp, "P5\n");
+	fprintf(fp, "P6\n");
 	fprintf(fp, "# opencl\n");
 	fprintf(fp, "%lu %lu\n", image->sizeX, image->sizeY);
 	fprintf(fp, "255\n");
@@ -196,18 +186,21 @@ void write_pgm(PGMImage* image, const char *filename)
 	}
 	else {
 		for (int i = image->frame_size; i < image->sizeY + image->frame_size; i++) {
-			fwrite(image->data + i * (image->sizeX + 2 * image->frame_size) + image->frame_size,
+			size_t was_write;
+			was_write = fwrite(image->data + i * (image->sizeX * 3 + 2 * 3 * image->frame_size) + 3 * image->frame_size,
 				sizeof(char),
-				image->sizeX,
+				image->sizeX * 3,
 				fp);
+			//printf("was written: %d, i: %d\n", was_write, i);
 		}
 	}
+	fflush(fp);
 	fclose(fp);
 }
 
-PGMImage* mock_pgm(int w, int h)
+PPMImage* mock_ppm(int w, int h)
 {
-	PGMImage* mock = (PGMImage*)malloc(sizeof(PGMImage));
+	PPMImage* mock = (PPMImage*)malloc(sizeof(PPMImage));
 	mock->data = (unsigned char*)malloc(h*w);
 	mock->sizeX = w;
 	mock->sizeY = h;
@@ -221,9 +214,9 @@ PGMImage* mock_pgm(int w, int h)
 	return mock;
 }
 
-PGMImage* mock_pgm_pitch(int w, int h, int p)
+PPMImage* mock_ppm_pitch(int w, int h, int p)
 {
-	PGMImage* mock = (PGMImage*)malloc(sizeof(PGMImage));
+	PPMImage* mock = (PPMImage*)malloc(sizeof(PPMImage));
 	mock->data = (unsigned char*)malloc(h*p);
 	mock->sizeX = w;
 	mock->sizeY = h;
@@ -240,7 +233,7 @@ PGMImage* mock_pgm_pitch(int w, int h, int p)
 	return mock;
 }
 
-void write_pgm_with_frame(PGMImage* image, const char *filename)
+void write_ppm_with_frame(PPMImage* image, const char *filename)
 {
 
 	FILE *fp;

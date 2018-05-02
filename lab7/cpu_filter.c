@@ -1,6 +1,6 @@
 #include "cpu_filter.h"
 
-unsigned char* filter_via_cpu(const PGMImage* image, ftype* filter, const int filter_size)
+unsigned char* filter_via_cpu(const PPMImage* image, ftype* filter, const int filter_size)
 {
 	size_t ix = image->sizeX;
 	size_t iy = image->sizeY;
