@@ -58,7 +58,7 @@ PPMImage* read_ppm(const char *filename)
 		goto error;
 	}
 
-	if (fread(result->data, 3 * sizeof(char) , result->sizeY * result->sizeX, fp) != result->sizeY * result->sizeX)
+	if (fread(result->data, 3 * sizeof(char), result->sizeY * result->sizeX, fp) != result->sizeY * result->sizeX)
 	{
 		fprintf(stderr, "Error loading image `%s'\n", filename);
 		goto error;
@@ -107,10 +107,10 @@ void resize_image(PPMImage* image, const int block_width, const int block_height
 
 void show_iamge_part(PPMImage* image, const int width, const int height)
 {
-	int image_width = (image->pitch > 0) ? image->pitch : image->sizeX;
+	int image_width_bt = image->sizeX * 3 + 2 * 3 * image->frame_size;
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			printf("%4d", image->data[i * image_width + j]);
+			printf("%4d", image->data[i * image_width_bt + j]);
 		}
 		printf("\n");
 	}
@@ -118,49 +118,81 @@ void show_iamge_part(PPMImage* image, const int width, const int height)
 
 void add_frame(PPMImage* image, const int frame_size)
 {
-	int new_image_width = image->sizeX + frame_size * 2;
+	int old_width_bt = image->sizeX * 3;
+	int new_image_width_bt = old_width_bt + frame_size * 3 * 2;
 	int new_image_height = image->sizeY + frame_size * 2;
-	unsigned char* result_data = calloc(new_image_height * new_image_width, sizeof(char));
+	int fr_sz_bt = frame_size * 3;
+	unsigned char* result_data = calloc(new_image_height * new_image_width_bt, sizeof(char));
 	for (int i = 0; i < frame_size; i++) {
 		int j = 0;
-		for (; j < frame_size; j++) {
-			result_data[i*new_image_width + j] = image->data[0];
+		for (; j < fr_sz_bt; j += 3) {
+			result_data[i*new_image_width_bt + j] = image->data[0];
+			result_data[i*new_image_width_bt + j + 1] = image->data[1];
+			result_data[i*new_image_width_bt + j + 2] = image->data[2];
 		}
-		for (; j < (image->sizeX + frame_size); j++) {
-			result_data[i*new_image_width + j] = image->data[j - frame_size];
+		for (; j < (image->sizeX * 3 + fr_sz_bt); j += 3) {
+			result_data[i*new_image_width_bt + j] = image->data[j - fr_sz_bt];
+			result_data[i*new_image_width_bt + j + 1] = image->data[j - fr_sz_bt + 1];
+			result_data[i*new_image_width_bt + j + 2] = image->data[j - fr_sz_bt + 2];
 		}
-		for (; j < (image->sizeX + 2 * frame_size); j++) {
-			result_data[i*new_image_width + j] = image->data[image->sizeX - 1];
+		for (; j < (image->sizeX * 3 + 2 * fr_sz_bt); j += 3) {
+			result_data[i*new_image_width_bt + j] = image->data[old_width_bt - 3];
+			result_data[i*new_image_width_bt + j + 1] = image->data[old_width_bt - 2];
+			result_data[i*new_image_width_bt + j + 2] = image->data[old_width_bt - 1];
 		}
 	}
 	for (int i = 0; i < image->sizeY; i++) {
 		int j = 0;
-		for (; j < frame_size; j++) {
-			result_data[(i+frame_size)*new_image_width + j] 
-				= image->data[i*image->sizeX];
+		for (; j < fr_sz_bt; j+=3) {
+			result_data[(i + frame_size)*new_image_width_bt + j]
+				= image->data[i*old_width_bt];
+			result_data[(i + frame_size)*new_image_width_bt + j + 1]
+				= image->data[i*old_width_bt + 1];
+			result_data[(i + frame_size)*new_image_width_bt + j + 2]
+				= image->data[i*old_width_bt + 2];
 		}
-		for (; j < (image->sizeX + frame_size); j++) {
-			result_data[(i + frame_size)*new_image_width + j]
-				= image->data[i*image->sizeX + j - frame_size];
+		for (; j < (old_width_bt + fr_sz_bt); j+=3) {
+			result_data[(i + frame_size)*new_image_width_bt + j]
+				= image->data[i*old_width_bt + j - fr_sz_bt];
+			result_data[(i + frame_size)*new_image_width_bt + j + 1]
+				= image->data[i*old_width_bt + j - fr_sz_bt + 1];
+			result_data[(i + frame_size)*new_image_width_bt + j + 2]
+				= image->data[i*old_width_bt + j - fr_sz_bt + 2];
 		}
-		for (; j < new_image_width; j++) {
-			result_data[(i + frame_size)*new_image_width + j] 
-				= image->data[i*image->sizeX + image->sizeX - 1];
+		for (; j < new_image_width_bt; j+=3) {
+			result_data[(i + frame_size)*new_image_width_bt + j]
+				= image->data[i*old_width_bt + old_width_bt - 3];
+			result_data[(i + frame_size)*new_image_width_bt + j + 1]
+				= image->data[i*old_width_bt + old_width_bt - 2];
+			result_data[(i + frame_size)*new_image_width_bt + j + 2]
+				= image->data[i*old_width_bt + old_width_bt - 1];
 		}
 	}
-	for (int i = (image->sizeY + frame_size); i < (image->sizeY + 2*frame_size); i++) {
+	for (int i = (image->sizeY + frame_size); i < (image->sizeY + 2 * frame_size); i++) {
 		int j = 0;
-		for (; j < frame_size; j++) {
-			result_data[i*new_image_width + j] 
-				= image->data[(image->sizeY-1)*image->sizeX];
+		for (; j < fr_sz_bt; j+=3) {
+			result_data[i*new_image_width_bt + j]
+				= image->data[(image->sizeY - 1)*old_width_bt];
+			result_data[i*new_image_width_bt + j + 1]
+				= image->data[(image->sizeY - 1)*old_width_bt + 1];
+			result_data[i*new_image_width_bt + j + 2]
+				= image->data[(image->sizeY - 1)*old_width_bt + 2];
 		}
-		for (; j < (image->sizeX + frame_size); j++) {
-			result_data[i*new_image_width + j] 
-				= image->data[(image->sizeY - 1)*image->sizeX + j - frame_size];
+		for (; j < (old_width_bt + fr_sz_bt); j+=3) {
+			result_data[i*new_image_width_bt + j]
+				= image->data[(image->sizeY - 1)*old_width_bt + j - fr_sz_bt];
+			result_data[i*new_image_width_bt + j + 1]
+				= image->data[(image->sizeY - 1)*old_width_bt + j - fr_sz_bt + 1];
+			result_data[i*new_image_width_bt + j + 2]
+				= image->data[(image->sizeY - 1)*old_width_bt + j - fr_sz_bt + 2];
 		}
-		for (; j < (image->sizeX + 2 * frame_size); j++) {
-			result_data[i*new_image_width + j] 
-				= image->data[(image->sizeY - 1)*image->sizeX + image->sizeX-1];
+		for (; j < new_image_width_bt; j+=3) {
+			result_data[i*new_image_width_bt + j]
+				= image->data[(image->sizeY - 1)*old_width_bt + old_width_bt - 3];
+			result_data[i*new_image_width_bt + j + 1]
+				= image->data[(image->sizeY - 1)*old_width_bt + old_width_bt - 2];
+			result_data[i*new_image_width_bt + j + 2]
+				= image->data[(image->sizeY - 1)*old_width_bt + old_width_bt - 1];
 		}
 	}
 	free(image->data);
@@ -178,9 +210,10 @@ void write_ppm(PPMImage* image, const char *filename)
 	fprintf(fp, "255\n");
 	if (image->pitch > 0) {
 		for (int i = image->frame_size; i < image->sizeY + image->frame_size; i++) {
-			fwrite(image->data + i * image->pitch + image->frame_size,
+			size_t was_write;
+			was_write = fwrite(image->data + i * (image->pitch * 3 + 2 * 3 * image->frame_size) + 3 * image->frame_size,
 				sizeof(char),
-				image->sizeX,
+				image->sizeX * 3,
 				fp);
 		}
 	}
@@ -191,7 +224,6 @@ void write_ppm(PPMImage* image, const char *filename)
 				sizeof(char),
 				image->sizeX * 3,
 				fp);
-			//printf("was written: %d, i: %d\n", was_write, i);
 		}
 	}
 	fflush(fp);
@@ -208,7 +240,7 @@ PPMImage* mock_ppm(int w, int h)
 	mock->frame_size = 1;
 	for (int i = 0; i < h; i++) {
 		for (int j = 0; j < w; j++) {
-			mock->data[i*w + j] = (unsigned char)(j%4);
+			mock->data[i*w + j] = (unsigned char)(j % 4);
 		}
 	}
 	return mock;
@@ -224,8 +256,9 @@ PPMImage* mock_ppm_pitch(int w, int h, int p)
 	for (int i = 0; i < h; i++) {
 		for (int j = 0; j < p; j++) {
 			if (j < w) {
-				mock->data[i*p + j] = (unsigned char)(j%4);
-			} else {
+				mock->data[i*p + j] = (unsigned char)(j % 4);
+			}
+			else {
 				mock->data[i*p + j] = 5;
 			}
 		}
@@ -235,10 +268,9 @@ PPMImage* mock_ppm_pitch(int w, int h, int p)
 
 void write_ppm_with_frame(PPMImage* image, const char *filename)
 {
-
 	FILE *fp;
 	fp = fopen(filename, "wb");
-	fprintf(fp, "P5\n");
+	fprintf(fp, "P6\n");
 	fprintf(fp, "# opencl\n");
 	fprintf(fp, "%lu %lu\n",
 		image->sizeX + 2 * image->frame_size,
@@ -254,7 +286,7 @@ void write_ppm_with_frame(PPMImage* image, const char *filename)
 	}
 	else {
 		fwrite(image->data, sizeof(char),
-			(image->sizeX + 2 * image->frame_size)*(image->sizeY + 2 * image->frame_size),
+			(image->sizeX + 2 * image->frame_size) * 3 *(image->sizeY + 2 * image->frame_size),
 			fp);
 	}
 	fclose(fp);
