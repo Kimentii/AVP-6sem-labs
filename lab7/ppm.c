@@ -77,7 +77,7 @@ error:
 
 void resize_image(PPMImage* image, const int block_width, const int block_height)
 {
-	int image_width = image->sizeX + 2 * image->frame_size;
+	int image_width = image->sizeX * 3 + 2 * 3 * image->frame_size;
 	int image_heigth = image->sizeY + 2 * image->frame_size;
 	int width_in_blocks = image_width / block_width;
 	if (!(width_in_blocks * block_width == image_width)) {
@@ -211,7 +211,7 @@ void write_ppm(PPMImage* image, const char *filename)
 	if (image->pitch > 0) {
 		for (int i = image->frame_size; i < image->sizeY + image->frame_size; i++) {
 			size_t was_write;
-			was_write = fwrite(image->data + i * (image->pitch * 3 + 2 * 3 * image->frame_size) + 3 * image->frame_size,
+			was_write = fwrite(image->data + i * image->pitch + 3 * image->frame_size,
 				sizeof(char),
 				image->sizeX * 3,
 				fp);
@@ -280,7 +280,7 @@ void write_ppm_with_frame(PPMImage* image, const char *filename)
 		for (int i = 0; i < (image->sizeY + 2 * image->frame_size); i++) {
 			fwrite(image->data + i * image->pitch,
 				sizeof(char),
-				image->sizeX + 2 * image->frame_size,
+				image->sizeX * 3 + 2 * 3 * image->frame_size,
 				fp);
 		}
 	}
