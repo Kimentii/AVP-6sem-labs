@@ -1,7 +1,7 @@
 #include <CL/cl.h>
 #include <stdio.h>
 #include "cl_api.h"
-#include "pgm.h"
+#include "ppm.h"
 #include "matrix.h"
 #include "filter.h"
 #include "string.h"
@@ -18,7 +18,7 @@
 
 #define KERNEL_FILE_NAME "kernel.cl"
 #define KERNEL_FUN "kernel_fun"
-#define INPUT_IMG_NAME "image.pgm"
+#define INPUT_IMG_NAME "lena.ppm"
 #define OUTPUT_IMG_NAME "out_image.pgm"
 
 const int BLOCK_WIDTH = 256;
@@ -65,15 +65,16 @@ int main(int argc, char* argv[])
 	// image 4x2
 	// group size 4x1
 	// grid size 1x4
-	PGMImage* input_image = mock_pgm(18, 4);
+	PPMImage* input_image = mock_ppm(18, 4);
 	input_image->sizeX = 4;
 	input_image->pitch = 18;
 	input_image->sizeY = 2;
 	input_image->frame_size = 1;
+	input_image = read_ppm(input_image_name);
 	size_t imgX = input_image->sizeX;
 	size_t imgY = input_image->sizeY;
-	//add_frame(input_image, filter_size/2);
-	//resize_image(input_image, BLOCK_WIDTH, 1);
+	add_frame(input_image, filter_size/2);
+	resize_image(input_image, BLOCK_WIDTH*3, 1);
 
 	time_snap();
 	cl_mem input_buffer = clCreateBuffer(
@@ -128,10 +129,10 @@ int main(int argc, char* argv[])
 	}
 	uint64_t build_time = time_elapsed();
 	
-	size_t group_x_size = 9;//64;
-	size_t group_x_pixels = group_x_size/3 - (filter_size - 1);
+	size_t group_x_size = 64;
+	size_t group_x_pixels = group_x_size - (filter_size - 1);
 	size_t group_y_size = 4;
-	size_t group_y_pixels = 4 - (filter_size - 1);
+	size_t group_y_pixels = 40 - (filter_size - 1);
 	size_t groups_x = imgX/group_x_pixels;
 	if (imgX % group_x_pixels != 0) groups_x++;
 
@@ -202,36 +203,36 @@ int main(int argc, char* argv[])
 		printf("Error during reading result matrix: %d\n", cl_errno);
 	}
 	time_snap();
-//	unsigned char* cpu_result = filter_via_cpu(input_image, filter, filter_size);
+	unsigned char* cpu_result = filter_via_cpu(input_image, filter, filter_size);
 	uint64_t cpu_time = time_elapsed();
 	printf("input_image size: [%ld, %ld]\n", imgX, imgY);
 
 	matrix_uchar_show(input_image->data, input_image->pitch, input_image->sizeY + (filter_size-1));
 	printf("=== result ===\n");
 	matrix_uchar_show(gpu_result, imgX*3, imgY);
-//	printf("Memcmp: %d\n", memcmp(cpu_result, gpu_result, imgX*imgY));
-//	printf("%-25s: %15lu\n", "GPU time", gpu_all_time);
-//	printf("%-25s: %15lu\n", "--> buf alloc time", buffers_allocation_time);
-//	printf("%-25s: %15lu\n", "--> build time", build_time - buffers_allocation_time);
-//	printf("%-25s: %15lu\n", "--> args prep time", args_prep_time - build_time);
-//	printf("%-25s: %15lu\n", "--> result read time", gpu_all_time - gpu_exec_time);
-//	printf("%-25s: %15lu\n", "--> execution time", gpu_exec_time - args_prep_time);
-//	printf("%-25s: %15lu\n", "CPU time", cpu_time);
+	printf("Memcmp: %d\n", memcmp(cpu_result, gpu_result, imgX*imgY*3));
+	printf("%-25s: %15lu\n", "GPU time", gpu_all_time);
+	printf("%-25s: %15lu\n", "--> buf alloc time", buffers_allocation_time);
+	printf("%-25s: %15lu\n", "--> build time", build_time - buffers_allocation_time);
+	printf("%-25s: %15lu\n", "--> args prep time", args_prep_time - build_time);
+	printf("%-25s: %15lu\n", "--> result read time", gpu_all_time - gpu_exec_time);
+	printf("%-25s: %15lu\n", "--> execution time", gpu_exec_time - args_prep_time);
+	printf("%-25s: %15lu\n", "CPU time", cpu_time);
 
-//	PGMImage gpu_image, cpu_image;
-//	gpu_image.sizeX = imgX;
-//	gpu_image.sizeY = imgY;
-//	gpu_image.data = gpu_result;
-//	gpu_image.pitch = imgX;
-//	gpu_image.frame_size = 0;
-//	cpu_image.sizeX = imgX;
-//	cpu_image.sizeY = imgY;
-//	cpu_image.pitch = imgX;
-//	cpu_image.frame_size = 0;
-//	cpu_image.data = cpu_result;
-//
-//	write_pgm(&gpu_image, "gpu_result.pgm");
-//	write_pgm(&cpu_image, "cpu_result.pgm");
+	PPMImage gpu_image, cpu_image;
+	gpu_image.sizeX = imgX;
+	gpu_image.sizeY = imgY;
+	gpu_image.data = gpu_result;
+	gpu_image.pitch = 0;
+	gpu_image.frame_size = 0;
+	cpu_image.sizeX = imgX;
+	cpu_image.sizeY = imgY;
+	cpu_image.pitch = 0;
+	cpu_image.frame_size = 0;
+	cpu_image.data = cpu_result;
+
+	write_ppm(&gpu_image, "gpu_result.ppm");
+	write_ppm(&cpu_image, "cpu_result.ppm");
 
 cl_program_release:
 	clReleaseProgram(program);

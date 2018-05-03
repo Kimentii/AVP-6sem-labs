@@ -40,12 +40,12 @@ void matrix_uchar_show(unsigned char* matrix, int w, int h)
 {
 	for (int i = 0; i < h; i++) {
 		for (int j = 0; j < w; j++) {
-			if (j < 20) {
-				printf("%.2d\t", matrix[i * w + j]);
+			if (j < 15) {
+				printf("%d\t", matrix[i * w + j]);
 			}
 		}
 		printf("\n");
-		if (i >= 34) {
+		if (i >= 10) {
 			return;
 		}
 	}
