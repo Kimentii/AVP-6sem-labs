@@ -65,21 +65,23 @@ int main(int argc, char* argv[])
 	// image 4x2
 	// group size 4x1
 	// grid size 1x4
-	PPMImage* input_image = mock_ppm(18, 4);
-	input_image->sizeX = 4;
-	input_image->pitch = 18;
-	input_image->sizeY = 2;
-	input_image->frame_size = 1;
-	input_image = read_ppm(input_image_name);
+//	PPMImage* input_image = mock_ppm(18, 4);
+//	input_image->sizeX = 4;
+//	input_image->pitch = 18;
+//	input_image->sizeY = 2;
+//	input_image->frame_size = 1;
+	PPMImage* input_image = read_ppm(input_image_name);
 	size_t imgX = input_image->sizeX;
 	size_t imgY = input_image->sizeY;
 	add_frame(input_image, filter_size/2);
-	resize_image(input_image, BLOCK_WIDTH*3, 1);
+	resize_image(input_image, 3, 1);
+	printf("Image size: [%d, %d], pitch: %d\n", input_image->sizeX, input_image->sizeY, input_image->pitch);
 
 	time_snap();
 	cl_mem input_buffer = clCreateBuffer(
 		context, 
 		CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, 
+		//243500,
 		input_image->pitch * (imgY + 3 * 2 * input_image->frame_size), 
 		input_image->data, 
 		&cl_errno
@@ -128,7 +130,7 @@ int main(int argc, char* argv[])
 		exit(0);
 	}
 	uint64_t build_time = time_elapsed();
-	
+
 	size_t group_x_size = 64;
 	size_t group_x_pixels = group_x_size - (filter_size - 1);
 	size_t group_y_size = 4;
@@ -207,9 +209,10 @@ int main(int argc, char* argv[])
 	uint64_t cpu_time = time_elapsed();
 	printf("input_image size: [%ld, %ld]\n", imgX, imgY);
 
-	matrix_uchar_show(input_image->data, input_image->pitch, input_image->sizeY + (filter_size-1));
-	printf("=== result ===\n");
-	matrix_uchar_show(gpu_result, imgX*3, imgY);
+//	matrix_uchar_show(input_image->data, input_image->pitch, input_image->sizeY + (filter_size-1));
+//	printf("=== result ===\n");
+//	matrix_uchar_show(gpu_result, imgX*3, imgY);
+
 	printf("Memcmp: %d\n", memcmp(cpu_result, gpu_result, imgX*imgY*3));
 	printf("%-25s: %15lu\n", "GPU time", gpu_all_time);
 	printf("%-25s: %15lu\n", "--> buf alloc time", buffers_allocation_time);
